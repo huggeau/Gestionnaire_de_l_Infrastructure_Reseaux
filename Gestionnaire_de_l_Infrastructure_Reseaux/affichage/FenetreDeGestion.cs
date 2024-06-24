@@ -16,5 +16,15 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         {
             InitializeComponent();
         }
+
+        private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

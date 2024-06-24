@@ -29,39 +29,81 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            button1 = new Button();
             Timer = new System.Windows.Forms.Timer(components);
+            menuStrip1 = new MenuStrip();
+            modificationToolStripMenuItem = new ToolStripMenuItem();
+            ajouterToolStripMenuItem = new ToolStripMenuItem();
+            supprimerToolStripMenuItem = new ToolStripMenuItem();
+            rechercheToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.Location = new Point(550, 294);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // Timer
             // 
-            Timer.Interval = 500;
+            Timer.Enabled = true;
+            Timer.Interval = 3000;
+            Timer.Tag = "TimerPing";
             Timer.Tick += Timer_Tick;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, rechercheToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1279, 28);
+            menuStrip1.TabIndex = 0;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // modificationToolStripMenuItem
+            // 
+            modificationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ajouterToolStripMenuItem, supprimerToolStripMenuItem });
+            modificationToolStripMenuItem.Name = "modificationToolStripMenuItem";
+            modificationToolStripMenuItem.Size = new Size(108, 24);
+            modificationToolStripMenuItem.Text = "modification";
+            // 
+            // ajouterToolStripMenuItem
+            // 
+            ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
+            ajouterToolStripMenuItem.Size = new Size(224, 26);
+            ajouterToolStripMenuItem.Text = "ajouter";
+            ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
+            // 
+            // supprimerToolStripMenuItem
+            // 
+            supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
+            supprimerToolStripMenuItem.Size = new Size(224, 26);
+            supprimerToolStripMenuItem.Text = "supprimer";
+            supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
+            // 
+            // rechercheToolStripMenuItem
+            // 
+            rechercheToolStripMenuItem.Name = "rechercheToolStripMenuItem";
+            rechercheToolStripMenuItem.Size = new Size(87, 24);
+            rechercheToolStripMenuItem.Text = "recherche";
+            rechercheToolStripMenuItem.Click += rechercheToolStripMenuItem_Click;
             // 
             // FenetrePrincipale
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1220, 662);
-            Controls.Add(button1);
+            ClientSize = new Size(1279, 607);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private Button button1;
         private System.Windows.Forms.Timer Timer;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem modificationToolStripMenuItem;
+        private ToolStripMenuItem ajouterToolStripMenuItem;
+        private ToolStripMenuItem supprimerToolStripMenuItem;
+        private ToolStripMenuItem rechercheToolStripMenuItem;
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux
+﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    partial class FenetreAjout
+    partial class FenetreRecherche
     {
         /// <summary>
         /// Required designer variable.
@@ -28,31 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            BoutonSauvegarder = new Button();
             SuspendLayout();
             // 
-            // BoutonSauvegarder
-            // 
-            BoutonSauvegarder.Location = new Point(12, 409);
-            BoutonSauvegarder.Name = "BoutonSauvegarder";
-            BoutonSauvegarder.Size = new Size(102, 29);
-            BoutonSauvegarder.TabIndex = 0;
-            BoutonSauvegarder.Text = "sauvegarder";
-            BoutonSauvegarder.UseVisualStyleBackColor = true;
-            // 
-            // FenetreAjout
+            // FenetreRecherche
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(BoutonSauvegarder);
-            Name = "FenetreAjout";
-            Text = "ajout d'un élément";
+            ClientSize = new Size(917, 558);
+            Name = "FenetreRecherche";
+            Text = "fenetre de recherche";
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button BoutonSauvegarder;
     }
 }

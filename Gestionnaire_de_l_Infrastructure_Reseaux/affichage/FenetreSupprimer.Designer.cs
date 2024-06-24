@@ -28,12 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "FenetreSupprimer";
+            BoutonSauvegarder = new Button();
+            SuspendLayout();
+            // 
+            // BoutonSauvegarder
+            // 
+            BoutonSauvegarder.Location = new Point(12, 409);
+            BoutonSauvegarder.Name = "BoutonSauvegarder";
+            BoutonSauvegarder.Size = new Size(105, 29);
+            BoutonSauvegarder.TabIndex = 0;
+            BoutonSauvegarder.Text = "sauvegarder";
+            BoutonSauvegarder.UseVisualStyleBackColor = true;
+            // 
+            // FenetreSupprimer
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(BoutonSauvegarder);
+            Name = "FenetreSupprimer";
+            Text = "supprimer un élément";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button BoutonSauvegarder;
     }
 }
