@@ -29,22 +29,16 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Timer = new System.Windows.Forms.Timer(components);
             menuStrip1 = new MenuStrip();
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
             rechercheToolStripMenuItem = new ToolStripMenuItem();
             boutonTest = new Button();
+            MairiePrincipale = new TextBox();
+            timer = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // Timer
-            // 
-            Timer.Enabled = true;
-            Timer.Interval = 3000;
-            Timer.Tag = "TimerPing";
-            Timer.Tick += Timer_Tick;
             // 
             // menuStrip1
             // 
@@ -94,16 +88,34 @@
             boutonTest.UseVisualStyleBackColor = true;
             boutonTest.Click += boutonTest_Click;
             // 
+            // MairiePrincipale
+            // 
+            MairiePrincipale.BackColor = SystemColors.Highlight;
+            MairiePrincipale.Enabled = false;
+            MairiePrincipale.Location = new Point(570, 249);
+            MairiePrincipale.Multiline = true;
+            MairiePrincipale.Name = "MairiePrincipale";
+            MairiePrincipale.Size = new Size(156, 130);
+            MairiePrincipale.TabIndex = 2;
+            MairiePrincipale.Text = "                                   Mairie Principale\r\n";
+            MairiePrincipale.TextAlign = HorizontalAlignment.Center;
+            // 
+            // timer
+            // 
+            timer.Tick += timer_Tick;
+            // 
             // FenetrePrincipale
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1279, 607);
+            Controls.Add(MairiePrincipale);
             Controls.Add(boutonTest);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
+            FormClosing += FenetrePrincipale_FormClosing;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -111,12 +123,13 @@
         }
 
         #endregion
-        private System.Windows.Forms.Timer Timer;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
         private ToolStripMenuItem rechercheToolStripMenuItem;
         private Button boutonTest;
+        private TextBox MairiePrincipale;
+        private System.Windows.Forms.Timer timer;
     }
 }
