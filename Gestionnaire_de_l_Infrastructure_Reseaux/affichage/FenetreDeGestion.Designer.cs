@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
+            fenetrePrincipaleBindingSource = new BindingSource(components);
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)fenetrePrincipaleBindingSource).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -41,7 +44,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1084, 28);
+            menuStrip1.Size = new Size(858, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -55,28 +58,34 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(224, 26);
+            ajouterToolStripMenuItem.Size = new Size(159, 26);
             ajouterToolStripMenuItem.Text = "ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(224, 26);
+            supprimerToolStripMenuItem.Size = new Size(159, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
+            // 
+            // fenetrePrincipaleBindingSource
+            // 
+            fenetrePrincipaleBindingSource.DataSource = typeof(FenetrePrincipale);
             // 
             // FenetreDeGestion
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1084, 592);
+            ClientSize = new Size(858, 592);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            MaximizeBox = false;
             Name = "FenetreDeGestion";
             Text = "Fenêtre d'Administration";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)fenetrePrincipaleBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -87,5 +96,6 @@
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
+        private BindingSource fenetrePrincipaleBindingSource;
     }
 }

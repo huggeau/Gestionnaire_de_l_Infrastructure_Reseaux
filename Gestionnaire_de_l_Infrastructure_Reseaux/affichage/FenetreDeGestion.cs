@@ -19,12 +19,14 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FenetreAjout fenetreAjout = new FenetreAjout();
+            fenetreAjout.ShowDialog();
         }
 
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FenetreSupprimer fenetreSupprimer = new FenetreSupprimer();
+            fenetreSupprimer.ShowDialog();
         }
     }
 }

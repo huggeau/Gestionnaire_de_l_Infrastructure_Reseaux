@@ -9,7 +9,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
     internal class Communication
     {
 
-        public Communication() { }
+        public Communication() 
+        {
+        }
 
         //sert à envoyer les pings 
         public void EnvoiePing()
@@ -18,10 +20,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
         }
 
         //sert à récéptionner les pings
-        public int ReceptionPing()
+        public void ReceptionPing()
         {
 
-            return 0;
         }
     }
 }

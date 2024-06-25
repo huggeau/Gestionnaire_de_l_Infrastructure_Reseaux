@@ -15,27 +15,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new FenetrePrincipale());
-
-            string host = "192.168.10.145";
-            string database = "db_Reseau_Mairie";
-            string username = "administrateur";
-            string password = "Admin07200&";
-            string connString = $"SERVER={host}; DATABASE={database}; UID={username}; PASSWORD={password}";
-
-            using (MySqlConnection conn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    Console.WriteLine("Openning Connection ...");
-                    conn.Open();
-
-                    Console.WriteLine("Connection successful!");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Error: " + e.Message);
-                }
-            }
         }
     }
 }

@@ -35,6 +35,7 @@
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
             rechercheToolStripMenuItem = new ToolStripMenuItem();
+            boutonTest = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -65,14 +66,14 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(224, 26);
+            ajouterToolStripMenuItem.Size = new Size(159, 26);
             ajouterToolStripMenuItem.Text = "ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(224, 26);
+            supprimerToolStripMenuItem.Size = new Size(159, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
@@ -83,11 +84,22 @@
             rechercheToolStripMenuItem.Text = "recherche";
             rechercheToolStripMenuItem.Click += rechercheToolStripMenuItem_Click;
             // 
+            // boutonTest
+            // 
+            boutonTest.Location = new Point(594, 214);
+            boutonTest.Name = "boutonTest";
+            boutonTest.Size = new Size(94, 29);
+            boutonTest.TabIndex = 1;
+            boutonTest.Text = "test";
+            boutonTest.UseVisualStyleBackColor = true;
+            boutonTest.Click += boutonTest_Click;
+            // 
             // FenetrePrincipale
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1279, 607);
+            Controls.Add(boutonTest);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "FenetrePrincipale";
@@ -105,5 +117,6 @@
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
         private ToolStripMenuItem rechercheToolStripMenuItem;
+        private Button boutonTest;
     }
 }
