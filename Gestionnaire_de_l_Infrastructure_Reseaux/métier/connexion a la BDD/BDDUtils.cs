@@ -13,7 +13,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
         {
             string host = "192.168.10.145";
             int port = 3306;
-            string database = "db23_glpi";
+            string database = "db_Reseau_Mairie";
             string username = "root";
             string password = "Admin07200&";
 
