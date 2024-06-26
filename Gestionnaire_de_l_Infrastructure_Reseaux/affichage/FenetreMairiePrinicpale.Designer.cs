@@ -1,6 +1,6 @@
 ﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    partial class FenetreDeGestion
+    partial class FenetreMairiePrinicpale
     {
         /// <summary>
         /// Required designer variable.

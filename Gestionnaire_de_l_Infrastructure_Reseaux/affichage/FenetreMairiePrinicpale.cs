@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    public partial class FenetreDeGestion : Form
+    public partial class FenetreMairiePrinicpale : Form
     {
-        public FenetreDeGestion()
+        public FenetreMairiePrinicpale()
         {
             InitializeComponent();
         }
