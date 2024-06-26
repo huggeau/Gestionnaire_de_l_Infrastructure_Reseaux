@@ -14,6 +14,8 @@ public partial class FenetrePrincipale : Form
     private string password;
     private string connString;
     private Communication comm = new Communication();
+
+    //sert à ce connecter à la base de données et de modifier l'affichage des données.
     public FenetrePrincipale()
     {
         InitializeComponent();
@@ -30,6 +32,7 @@ public partial class FenetrePrincipale : Form
             {
                 Console.WriteLine("Openning Connection ...");
                 conn.Open();
+
                 Console.WriteLine("Connection successful!");
             }
             catch (Exception e)
@@ -48,7 +51,6 @@ public partial class FenetrePrincipale : Form
     {
         FenetreSupprimer fenetreSupprimer = new FenetreSupprimer();
         fenetreSupprimer.ShowDialog();
-
     }
 
     private void rechercheToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,20 +59,45 @@ public partial class FenetrePrincipale : Form
         fenetreRecherche.ShowDialog();
     }
 
-    private void boutonTest_Click(object sender, EventArgs e)
-    {
-        FenetreDeGestion fenetreDeGestion = new FenetreDeGestion();
-        fenetreDeGestion.ShowDialog();
-    }
+    //coupe la connexion à la base de donnée lorsque la page WinFom est fermé.
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
         conn.Close();
     }
 
-    //sert à lancer les pings vers les infrastructure toute les x secondes
-    //( que vous aurez défini dans le timer du designer )
+    //sert à lancer les pings vers les infrastructure toute les 10 minutes
     private void timer_Tick(object sender, EventArgs e)
     {
-        comm.EnvoiePing();
+        MySqlCommand commande = conn.CreateCommand();
+        commande.CommandText = "SELECT ip FROM Materiel_Reseau";
+        if (comm.EnvoiePing(commande) == true)
+        {
+            MairiePrincipaleTextBlock.BackColor = Color.Green;
+        }
+        else
+        {
+            MairiePrincipaleTextBlock.BackColor = Color.Red;
+        }
+    }
+
+    //sert à forcer le lancement de la méthode EnvoiePing().
+    private void forcerUnPingToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        MySqlCommand commande = conn.CreateCommand();
+        commande.CommandText = "SELECT id, ip FROM Materiel_Reseau";
+        if (comm.EnvoiePing(commande) == true)
+        {
+            MairiePrincipaleTextBlock.BackColor = Color.Green;
+        }
+        else
+        {
+            MairiePrincipaleTextBlock.BackColor = Color.Red;
+        }
+    }
+
+    private void boutonMairiePrincipale(object sender, EventArgs e)
+    {
+        FenetreDeGestion fenetreDeGestion = new FenetreDeGestion();
+        fenetreDeGestion.ShowDialog();
     }
 }

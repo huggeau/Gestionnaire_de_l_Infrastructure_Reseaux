@@ -29,26 +29,29 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            menuStrip1 = new MenuStrip();
+            menuStripFenetrePrincipale = new MenuStrip();
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
             rechercheToolStripMenuItem = new ToolStripMenuItem();
+            forcerUnPingToolStripMenuItem = new ToolStripMenuItem();
             boutonTest = new Button();
-            MairiePrincipale = new TextBox();
-            timer = new System.Windows.Forms.Timer(components);
-            menuStrip1.SuspendLayout();
+            MairiePrincipaleTextBlock = new TextBox();
+            timerFenetrePrinicipale = new System.Windows.Forms.Timer(components);
+            panel1 = new Panel();
+            menuStripFenetrePrincipale.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // menuStrip1
+            // menuStripFenetrePrincipale
             // 
-            menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, rechercheToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1279, 28);
-            menuStrip1.TabIndex = 0;
-            menuStrip1.Text = "menuStrip1";
+            menuStripFenetrePrincipale.ImageScalingSize = new Size(20, 20);
+            menuStripFenetrePrincipale.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, rechercheToolStripMenuItem, forcerUnPingToolStripMenuItem });
+            menuStripFenetrePrincipale.Location = new Point(0, 0);
+            menuStripFenetrePrincipale.Name = "menuStripFenetrePrincipale";
+            menuStripFenetrePrincipale.Size = new Size(1279, 28);
+            menuStripFenetrePrincipale.TabIndex = 0;
+            menuStripFenetrePrincipale.Text = "menuStripFenetrePrincipale";
             // 
             // modificationToolStripMenuItem
             // 
@@ -60,14 +63,14 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(159, 26);
+            ajouterToolStripMenuItem.Size = new Size(224, 26);
             ajouterToolStripMenuItem.Text = "ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(159, 26);
+            supprimerToolStripMenuItem.Size = new Size(224, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
@@ -78,58 +81,84 @@
             rechercheToolStripMenuItem.Text = "recherche";
             rechercheToolStripMenuItem.Click += rechercheToolStripMenuItem_Click;
             // 
+            // forcerUnPingToolStripMenuItem
+            // 
+            forcerUnPingToolStripMenuItem.Name = "forcerUnPingToolStripMenuItem";
+            forcerUnPingToolStripMenuItem.Size = new Size(116, 24);
+            forcerUnPingToolStripMenuItem.Text = "forcer un ping";
+            forcerUnPingToolStripMenuItem.Click += forcerUnPingToolStripMenuItem_Click;
+            // 
             // boutonTest
             // 
-            boutonTest.Location = new Point(594, 214);
+            boutonTest.ForeColor = SystemColors.InfoText;
+            boutonTest.Location = new Point(5, 3);
             boutonTest.Name = "boutonTest";
-            boutonTest.Size = new Size(94, 29);
+            boutonTest.Size = new Size(147, 29);
             boutonTest.TabIndex = 1;
-            boutonTest.Text = "test";
+            boutonTest.Text = "Mairie Principale";
             boutonTest.UseVisualStyleBackColor = true;
-            boutonTest.Click += boutonTest_Click;
+            boutonTest.Click += boutonMairiePrincipale;
             // 
-            // MairiePrincipale
+            // MairiePrincipaleTextBlock
             // 
-            MairiePrincipale.BackColor = SystemColors.Highlight;
-            MairiePrincipale.Enabled = false;
-            MairiePrincipale.Location = new Point(570, 249);
-            MairiePrincipale.Multiline = true;
-            MairiePrincipale.Name = "MairiePrincipale";
-            MairiePrincipale.Size = new Size(156, 130);
-            MairiePrincipale.TabIndex = 2;
-            MairiePrincipale.Text = "                                   Mairie Principale\r\n";
-            MairiePrincipale.TextAlign = HorizontalAlignment.Center;
+            MairiePrincipaleTextBlock.BackColor = SystemColors.ButtonHighlight;
+            MairiePrincipaleTextBlock.BorderStyle = BorderStyle.FixedSingle;
+            MairiePrincipaleTextBlock.Enabled = false;
+            MairiePrincipaleTextBlock.Font = new Font("Segoe UI", 9F);
+            MairiePrincipaleTextBlock.ForeColor = SystemColors.ActiveCaptionText;
+            MairiePrincipaleTextBlock.Location = new Point(3, 38);
+            MairiePrincipaleTextBlock.Multiline = true;
+            MairiePrincipaleTextBlock.Name = "MairiePrincipaleTextBlock";
+            MairiePrincipaleTextBlock.Size = new Size(147, 125);
+            MairiePrincipaleTextBlock.TabIndex = 2;
+            MairiePrincipaleTextBlock.TextAlign = HorizontalAlignment.Center;
             // 
-            // timer
+            // timerFenetrePrinicipale
             // 
-            timer.Tick += timer_Tick;
+            timerFenetrePrinicipale.Interval = 360000;
+            timerFenetrePrinicipale.Tick += timer_Tick;
+            // 
+            // panel1
+            // 
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(MairiePrincipaleTextBlock);
+            panel1.Controls.Add(boutonTest);
+            panel1.Location = new Point(526, 218);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(157, 170);
+            panel1.TabIndex = 3;
             // 
             // FenetrePrincipale
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Cornsilk;
             ClientSize = new Size(1279, 607);
-            Controls.Add(MairiePrincipale);
-            Controls.Add(boutonTest);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
+            Controls.Add(panel1);
+            Controls.Add(menuStripFenetrePrincipale);
+            ForeColor = SystemColors.Window;
+            MainMenuStrip = menuStripFenetrePrincipale;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
             FormClosing += FenetrePrincipale_FormClosing;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            menuStripFenetrePrincipale.ResumeLayout(false);
+            menuStripFenetrePrincipale.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private MenuStrip menuStrip1;
+        private MenuStrip menuStripFenetrePrincipale;
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
         private ToolStripMenuItem rechercheToolStripMenuItem;
         private Button boutonTest;
-        private TextBox MairiePrincipale;
-        private System.Windows.Forms.Timer timer;
+        private TextBox MairiePrincipaleTextBlock;
+        private System.Windows.Forms.Timer timerFenetrePrinicipale;
+        private ToolStripMenuItem forcerUnPingToolStripMenuItem;
+        private Panel panel1;
     }
 }
