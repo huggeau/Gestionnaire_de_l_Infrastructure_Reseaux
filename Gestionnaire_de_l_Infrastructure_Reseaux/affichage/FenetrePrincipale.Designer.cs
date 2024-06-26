@@ -63,14 +63,14 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(224, 26);
+            ajouterToolStripMenuItem.Size = new Size(159, 26);
             ajouterToolStripMenuItem.Text = "ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(224, 26);
+            supprimerToolStripMenuItem.Size = new Size(159, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
@@ -140,7 +140,6 @@
             MainMenuStrip = menuStripFenetrePrincipale;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
-            FormClosing += FenetrePrincipale_FormClosing;
             menuStripFenetrePrincipale.ResumeLayout(false);
             menuStripFenetrePrincipale.PerformLayout();
             panel1.ResumeLayout(false);
