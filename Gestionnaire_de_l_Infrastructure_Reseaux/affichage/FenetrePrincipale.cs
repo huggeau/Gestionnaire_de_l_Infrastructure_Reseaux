@@ -7,14 +7,59 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux;
 public partial class FenetrePrincipale : Form
 {
     private Communication comm = new Communication();
+    public Panel movablePanel { get; set; }
+    private bool isDragging = false;
+    private Point startPoint = new Point(0, 0);
 
     //sert à ce connecter à la base de données et de modifier l'affichage des données.
     public FenetrePrincipale()
     {
         InitializeComponent();
 
+        // Initialize the Panel
+        movablePanel = new Panel
+        {
+            Size = new Size(200, 100),
+            BackColor = Color.LightBlue,
+            Location = new Point(50, 50)
+        };
+
+        // Add Mouse event handlers
+        movablePanel.MouseDown += new MouseEventHandler(movablePanel_MouseDown);
+        movablePanel.MouseMove += new MouseEventHandler(movablePanel_MouseMove);
+        movablePanel.MouseUp += new MouseEventHandler(movablePanel_MouseUp);
+
+        // Add the Panel to the Form
+        Controls.Add(movablePanel);
+
         //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
         //Ping();
+    }
+
+    private void movablePanel_MouseDown(object sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+            isDragging = true;
+            startPoint = e.Location;
+        }
+    }
+
+    private void movablePanel_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (isDragging)
+        {
+            Point p = PointToClient(MousePosition);
+            movablePanel.Location = new Point(p.X - startPoint.X, p.Y - startPoint.Y);
+        }
+    }
+
+    private void movablePanel_MouseUp(object sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+            isDragging = false;
+        }
     }
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -59,12 +104,12 @@ public partial class FenetrePrincipale : Form
     }
     private void FenetrePrincipale_Load(object sender, EventArgs e)
     {
-        
+
     }
     public void Ping()
     {
         // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
-        
+
         bool flagMairiePrincipale = comm.PingGeneral(1);
         bool flagMairieAnnexe = comm.PingGeneral(3);
         bool flagAgora = comm.PingGeneral(5);
@@ -159,5 +204,10 @@ public partial class FenetrePrincipale : Form
         {
             PMTextBox.BackColor = Color.Red;
         }
+    }
+
+    private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        comm.SavePanelPositions();
     }
 }

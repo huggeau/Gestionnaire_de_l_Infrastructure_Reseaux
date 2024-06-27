@@ -16,6 +16,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
         private Ping pingSender = new Ping();
         private PingReply pingReply;
         private PingOptions options = new PingOptions();
+        private FenetrePrincipale FenetrePrincipale { get; set; }
 
         //variable de classe nécessaire à la connexion pour la base de données 
         private MySqlConnector.MySqlConnection conn;
@@ -146,7 +147,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 
                         listSites.Add(site);
                     }
-                   
+
                 }
                 catch (Exception e)
                 {
@@ -155,5 +156,31 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             }
             return listSites;
         }
+
+        public void SavePanelPositions()
+        {
+            connexionBDD();
+            using (var connection = new MySqlConnector.MySqlConnection(connString))
+            {
+                
+                connection.Open();
+
+                // Clear existing data
+                string deleteQuery = "DELETE position_x, position_y FROM Site Limit 1";
+                using (var command = new MySqlConnector.MySqlCommand(deleteQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                // Insert new position
+                string insertQuery = "INSERT INTO Site (position_x, position_y) VALUES (@x, @y)";
+                using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@x", FenetrePrincipale.movablePanel.Location.X);
+                    command.Parameters.AddWithValue("@y", FenetrePrincipale.movablePanel.Location.Y);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
-}   
+}  

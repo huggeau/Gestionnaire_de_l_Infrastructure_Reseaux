@@ -447,6 +447,7 @@
             MainMenuStrip = menuStripFenetrePrincipale;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
+            FormClosing += FenetrePrincipale_FormClosing;
             Load += FenetrePrincipale_Load;
             menuStripFenetrePrincipale.ResumeLayout(false);
             menuStripFenetrePrincipale.PerformLayout();
