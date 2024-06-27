@@ -166,14 +166,14 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
                 connection.Open();
 
                 // Clear existing data
-                string deleteQuery = "DELETE position_x, position_y FROM Site Limit 1";
+                string deleteQuery = "DELETE FROM PanelPosition";
                 using (var command = new MySqlConnector.MySqlCommand(deleteQuery, connection))
                 {
                     command.ExecuteNonQuery();
                 }
 
                 // Insert new position
-                string insertQuery = "INSERT INTO Site (position_x, position_y) VALUES (@x, @y)";
+                string insertQuery = "INSERT INTO PanelPosition (X, Y) VALUES (@x, @y)";
                 using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@x", FenetrePrincipale.movablePanel.Location.X);

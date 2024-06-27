@@ -7,7 +7,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux;
 public partial class FenetrePrincipale : Form
 {
     private Communication comm = new Communication();
-    public Panel movablePanel { get; set; }
+    public Panel movablePanel;
     private bool isDragging = false;
     private Point startPoint = new Point(0, 0);
 
@@ -33,7 +33,7 @@ public partial class FenetrePrincipale : Form
         Controls.Add(movablePanel);
 
         //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
-        //Ping();
+        Ping();
     }
 
     private void movablePanel_MouseDown(object sender, MouseEventArgs e)
