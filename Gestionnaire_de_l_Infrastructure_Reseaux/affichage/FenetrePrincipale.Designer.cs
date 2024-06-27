@@ -85,7 +85,7 @@
             menuStripFenetrePrincipale.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, rechercheToolStripMenuItem, forcerUnPingToolStripMenuItem });
             menuStripFenetrePrincipale.Location = new Point(0, 0);
             menuStripFenetrePrincipale.Name = "menuStripFenetrePrincipale";
-            menuStripFenetrePrincipale.Size = new Size(1452, 28);
+            menuStripFenetrePrincipale.Size = new Size(1513, 28);
             menuStripFenetrePrincipale.TabIndex = 0;
             menuStripFenetrePrincipale.Text = "menuStripFenetrePrincipale";
             // 
@@ -228,7 +228,7 @@
             panel4.BorderStyle = BorderStyle.FixedSingle;
             panel4.Controls.Add(CTMTextBox);
             panel4.Controls.Add(boutonCTM);
-            panel4.Location = new Point(404, 188);
+            panel4.Location = new Point(408, 188);
             panel4.Name = "panel4";
             panel4.Size = new Size(165, 98);
             panel4.TabIndex = 6;
@@ -431,7 +431,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Cornsilk;
-            ClientSize = new Size(1452, 665);
+            ClientSize = new Size(1513, 729);
             Controls.Add(panel10);
             Controls.Add(panel9);
             Controls.Add(panel8);
@@ -447,6 +447,7 @@
             MainMenuStrip = menuStripFenetrePrincipale;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
+            Load += FenetrePrincipale_Load;
             menuStripFenetrePrincipale.ResumeLayout(false);
             menuStripFenetrePrincipale.PerformLayout();
             panel1.ResumeLayout(false);

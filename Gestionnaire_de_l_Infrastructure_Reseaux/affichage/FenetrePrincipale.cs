@@ -12,14 +12,9 @@ public partial class FenetrePrincipale : Form
     public FenetrePrincipale()
     {
         InitializeComponent();
-        if (comm.PingMairiePrincipale() == true)
-        {
-            MairiePrincipaleTextBlock.BackColor = Color.Green;
-        }
-        else
-        {
-            MairiePrincipaleTextBlock.BackColor = Color.Red;
-        }
+
+        //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
+        Ping();
     }
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -42,62 +37,13 @@ public partial class FenetrePrincipale : Form
     //sert à lancer les pings vers les infrastructure toute les 10 minutes
     private void timer_Tick(object sender, EventArgs e)
     {
-        if (comm.PingMairiePrincipale() == true)
-        {
-            MairiePrincipaleTextBlock.BackColor = Color.Green;
-        }
-        else
-        {
-            MairiePrincipaleTextBlock.BackColor = Color.Red;
-        }
+        Ping();
     }
 
     //sert à forcer le lancement de la méthode EnvoiePing().
     private void forcerUnPingToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
-        bool flagMairiePrincipale = comm.PingMairiePrincipale();
-        bool flagMairieAnnexe = comm.PingMairieAnnexe();
-        bool flagAgora = comm.PingAgora();
-        bool flagCentreLeBournot = comm.PingCentreLeBournot();
-        bool flagPM = comm.PingPoliceMunicipale();
-        bool flag18A = comm.Ping18A();
-        bool flagCTM = comm.PingCTM();
-        bool flagLienhart = comm.PingLienhart();
-        bool flagEaux = comm.PingEauxETAssainissement();
-        bool flagAbattoirs = comm.PingAbattoirs();
-        bool flagSTEP = comm.PingSTEP();
-        bool flagChateau = comm.PingChateau();
-
-        // ce sert des différents flags pour changer la couleur pour savoir si les pings sont bon ou pas
-        if (flagMairiePrincipale || flagMairieAnnexe || flagAgora || flagCentreLeBournot
-            || flagPM || flag18A || flagCTM || flagLienhart || flagEaux || flagAbattoirs
-            || flagSTEP || flagChateau)
-        {
-            MairiePrincipaleTextBlock.BackColor = Color.Green;
-            MairieAnnexeTextBox.BackColor = Color.Green;
-            AgoraTextBox.BackColor = Color.Green;
-            PMTextBox.BackColor = Color.Green;
-            CTMTextBox.BackColor = Color.Green;
-            EauxAssainTextBox.BackColor = Color.Green;
-            STEPTextBox.BackColor = Color.Green;
-            CentreBournotTextBox.BackColor = Color.Green;
-            LienhartTextBox.BackColor = Color.Green;
-            AbattoirsTextBox.BackColor = Color.Green;
-        }
-        else
-        {
-            MairiePrincipaleTextBlock.BackColor = Color.Red;
-            MairieAnnexeTextBox.BackColor = Color.Red;
-            AgoraTextBox.BackColor = Color.Red;
-            PMTextBox.BackColor = Color.Red;
-            CTMTextBox.BackColor = Color.Red;
-            EauxAssainTextBox.BackColor = Color.Red;
-            STEPTextBox.BackColor = Color.Red;
-            CentreBournotTextBox.BackColor = Color.Red;
-            LienhartTextBox.BackColor = Color.Red;
-            AbattoirsTextBox.BackColor = Color.Red;
-        }
+        Ping();
     }
 
     private void boutonMairiePrincipale(object sender, EventArgs e)
@@ -107,6 +53,110 @@ public partial class FenetrePrincipale : Form
     }
 
     private void boutonMairieAnnexe_Click(object sender, EventArgs e)
+    {
+        FenetreMairiePrinicpale fenetre = new FenetreMairiePrinicpale();
+        fenetre.ShowDialog();
+    }
+    public void Ping()
+    {
+        // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
+        bool flagMairiePrincipale = comm.PingGeneral(1);
+        bool flagMairieAnnexe = comm.PingGeneral(3);
+        bool flagAgora = comm.PingGeneral(5);
+        bool flagCentreLeBournot = comm.PingGeneral(6);
+        bool flagPM = comm.PingGeneral(7);
+        bool flag18A = comm.PingGeneral(8);
+        bool flagCTM = comm.PingGeneral(10);
+        bool flagLienhart = comm.PingGeneral(11);
+        bool flagEaux = comm.PingGeneral(12);
+        bool flagAbattoirs = comm.PingGeneral(13);
+        bool flagSTEP = comm.PingGeneral(14);
+        bool flagChateau = comm.PingGeneral(25);
+
+        // ce sert des différents flags pour changer la couleur pour savoir si les pings sont bon ou pas
+        if (flagMairiePrincipale)
+        {
+            MairiePrincipaleTextBlock.BackColor = Color.Green;
+        }
+        else
+        {
+            MairiePrincipaleTextBlock.BackColor = Color.Red;
+        }
+        if (flagMairieAnnexe)
+        {
+            MairieAnnexeTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            MairieAnnexeTextBox.BackColor = Color.Red;
+        }
+        if (flagCentreLeBournot)
+        {
+            CentreBournotTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            CentreBournotTextBox.BackColor = Color.Red;
+        }
+        if (flagLienhart)
+        {
+            LienhartTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            LienhartTextBox.BackColor = Color.Red;
+        }
+        if (flagEaux)
+        {
+            EauxAssainTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            EauxAssainTextBox.BackColor = Color.Red;
+        }
+        if (flagCTM)
+        {
+            CTMTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            CTMTextBox.BackColor = Color.Red;
+        }
+        if (flagAbattoirs)
+        {
+            AbattoirsTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            AbattoirsTextBox.BackColor = Color.Red;
+        }
+        if (flagSTEP)
+        {
+            STEPTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            STEPTextBox.BackColor = Color.Red;
+        }
+        if (flagAgora)
+        {
+            AgoraTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            AgoraTextBox.BackColor = Color.Red;
+        }
+        if (flagPM)
+        {
+            PMTextBox.BackColor = Color.Green;
+        }
+        else
+        {
+            PMTextBox.BackColor = Color.Red;
+        }
+    }
+
+    private void FenetrePrincipale_Load(object sender, EventArgs e)
     {
 
     }
