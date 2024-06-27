@@ -115,12 +115,14 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             }
         }
 
-        public void RemplissageSite()
+        public List<Site> RemplissageSite()
         {
             connexionBDD();
+            List<Site> listSites = new List<Site>();
+            ArrayList idSite = new ArrayList();
+            ArrayList nomSite = new ArrayList();
             using (conn = new MySqlConnector.MySqlConnection(connString))
             {
-                Site site = new Site();
                 try
                 {
                     // on ouvre la BDD puis on lui demande une requête
@@ -130,16 +132,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 
                     // ici on créer un reader qui va lire le résultat de la commande 
                     MySqlConnector.MySqlDataReader reader = commandeRemplissageSite.ExecuteReader();
-                    ArrayList idSite = new ArrayList();
-                    ArrayList nomSite = new ArrayList();
-
-                    // on dit de prendre toute les options à la disposition de la variable Ping options.
-                    options.DontFragment = true;
-
-                    // créer un buffer de 32 octets de données à transmettre.
-                    string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                    byte[] buffer = Encoding.ASCII.GetBytes(data);
-                    int timeout = 120;
 
                     //le reader va lire les résultat et les mettres dans un tableau
                     while (reader.Read())
@@ -147,24 +139,21 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
                         idSite.Add(reader["id"]);
                         nomSite.Add(reader["nom"]);
                     }
-                    foreach (int id in idSite)
-                    {
-                        site.Id = id;
-                    }
-                    foreach(string nom in nomSite)
-                    {
-                        site.Nom = nom;
-                    }
 
-                    
+                    for (int i = 0; i < idSite.Count; i++)
+                    {
+                        Site site = new Site(idSite[i].ToString(), nomSite[i].ToString());
+
+                        listSites.Add(site);
+                    }
+                   
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-
-
             }
+            return listSites;
         }
     }
 }   

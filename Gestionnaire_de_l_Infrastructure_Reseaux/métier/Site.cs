@@ -8,20 +8,11 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 {
     public class Site
     {
-        private int id;
-        public int Id 
-        { 
-            get { return id; } 
-            set { id = value; } 
-        }
-        private string nom; 
-        public string Nom
-        {
-            get { return nom; }
-            set { nom = value; }
-        }
-
-        public Site() { 
+        private string Id {  get; set; }
+        private string Nom { get; set; }
+        public Site(string id, string nom) {
+            Nom = nom;
+            Id = id;
         }
     }
 }

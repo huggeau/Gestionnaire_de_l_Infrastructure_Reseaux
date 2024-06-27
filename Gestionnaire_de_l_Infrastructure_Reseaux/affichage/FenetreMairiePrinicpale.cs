@@ -15,6 +15,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         public FenetreMairiePrinicpale()
         {
             InitializeComponent();
+            
         }
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)

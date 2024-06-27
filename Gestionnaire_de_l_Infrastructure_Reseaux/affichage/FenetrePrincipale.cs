@@ -14,7 +14,7 @@ public partial class FenetrePrincipale : Form
         InitializeComponent();
 
         //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
-        Ping();
+        //Ping();
     }
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -57,9 +57,14 @@ public partial class FenetrePrincipale : Form
         FenetreMairiePrinicpale fenetre = new FenetreMairiePrinicpale();
         fenetre.ShowDialog();
     }
+    private void FenetrePrincipale_Load(object sender, EventArgs e)
+    {
+        
+    }
     public void Ping()
     {
         // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
+        
         bool flagMairiePrincipale = comm.PingGeneral(1);
         bool flagMairieAnnexe = comm.PingGeneral(3);
         bool flagAgora = comm.PingGeneral(5);
@@ -154,10 +159,5 @@ public partial class FenetrePrincipale : Form
         {
             PMTextBox.BackColor = Color.Red;
         }
-    }
-
-    private void FenetrePrincipale_Load(object sender, EventArgs e)
-    {
-
     }
 }
