@@ -1,4 +1,4 @@
-# Gestionnaire_de_l_Infrastructure_Reseaux
+# Gestionnaire d'Infrastructure Reseau
 
   Voici un exemple de projet que j'ai du effectuer lors de mon stage de première année de BST CIEL, il s'agit d'in logiciel C# en Windows Form permettant de visualiser les connections réseaux d'une infrastructure afin de savoir si certain matériel réseau est déféctueux ou éteint. 
 
