@@ -14,17 +14,16 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
     internal class Communication
     {
         private Ping pingSender = new Ping();
-        private PingReply pingReply;
+        private PingReply? pingReply;
         private PingOptions options = new PingOptions();
-        private FenetrePrincipale FenetrePrincipale { get; set; }
 
         //variable de classe nécessaire à la connexion pour la base de données 
-        private MySqlConnector.MySqlConnection conn;
-        private string host;
-        private string database;
-        private string username;
-        private string password;
-        private string connString;
+        private MySqlConnector.MySqlConnection? conn;
+        private string? host;
+        private string? database;
+        private string? username;
+        private string? password;
+        private string? connString;
 
         public Communication()
         {
@@ -96,7 +95,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
                 {
                     Console.WriteLine("Error: " + e.Message);
                 }
-                // on regarde avec un compteur si des au minima 1 éléments du site est deffectuex et si oui alors on passe le flag en faux
+                // on regarde avec un compteur si au minima 1 éléments du site est deffectuex et si oui alors on passe le flag en faux
                 if (compteur > 0)
                 {
                     flagPing = false;
