@@ -1,66 +1,51 @@
 using Gestionnaire_de_l_Infrastructure_Reseaux.affichage;
 using Gestionnaire_de_l_Infrastructure_Reseaux.métier;
+using MySql.Data.MySqlClient;
 using MySqlConnector;
+using System.Drawing;
+using System.Data;
+using System.Windows.Forms;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux;
 
 public partial class FenetrePrincipale : Form
 {
     private Communication comm = new Communication();
-    public Panel movablePanel;
+    private string? connString;
     private bool isDragging = false;
+    private bool isMoveModeEnabled = false;
     private Point startPoint = new Point(0, 0);
+
+
+
+    //méthode créer par le designer et modifié par le développeur
 
     //sert à ce connecter à la base de données et de modifier l'affichage des données.
     public FenetrePrincipale()
     {
         InitializeComponent();
 
-        // Initialize the Panel
-        movablePanel = new Panel
+        this.Load += new EventHandler(FenetrePrincipale_Load);
+
+        // ajoute un bouton pour activer le déplacement des panels
+        Button moveModeButton = new Button
         {
-            Size = new Size(200, 100),
-            BackColor = Color.LightBlue,
-            Location = new Point(50, 50)
+            Text = "Activer Deplacement Panel",
+            ForeColor = Color.Black,
+            Size = new Size(230,29),
+            Location = new Point(0, 30)
         };
-
-        // Add Mouse event handlers
-        movablePanel.MouseDown += new MouseEventHandler(movablePanel_MouseDown);
-        movablePanel.MouseMove += new MouseEventHandler(movablePanel_MouseMove);
-        movablePanel.MouseUp += new MouseEventHandler(movablePanel_MouseUp);
-
-        // Add the Panel to the Form
-        Controls.Add(movablePanel);
+        moveModeButton.Click += new EventHandler(MoveModeButton_Click);
+        this.Controls.Add(moveModeButton);
 
         //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
         Ping();
     }
 
-    private void movablePanel_MouseDown(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Left)
-        {
-            isDragging = true;
-            startPoint = e.Location;
-        }
-    }
+    
 
-    private void movablePanel_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (isDragging)
-        {
-            Point p = PointToClient(MousePosition);
-            movablePanel.Location = new Point(p.X - startPoint.X, p.Y - startPoint.Y);
-        }
-    }
-
-    private void movablePanel_MouseUp(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Left)
-        {
-            isDragging = false;
-        }
-    }
+    
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
         FenetreAjout fenetreAjout = new FenetreAjout();
@@ -90,26 +75,131 @@ public partial class FenetrePrincipale : Form
     {
         Ping();
     }
-
-    private void boutonMairiePrincipale(object sender, EventArgs e)
+    
+    private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
-        FenetreMairiePrinicpale fenetreMairiePrincipale = new FenetreMairiePrinicpale();
-        fenetreMairiePrincipale.ShowDialog();
+        // comm.SavePanelPositions();
     }
 
-    private void boutonMairieAnnexe_Click(object sender, EventArgs e)
+
+    //méthode créer par le développeur
+    private void FenetrePrincipale_Load(object? sender, EventArgs e)
     {
-        FenetreMairiePrinicpale fenetre = new FenetreMairiePrinicpale();
-        fenetre.ShowDialog();
+        LoadPanelsFromDatabase();
     }
-    private void FenetrePrincipale_Load(object sender, EventArgs e)
+    private void LoadPanelsFromDatabase()
     {
 
+        string query = "SELECT Id, Nom, XPosition, YPosition FROM Site LIMIT 1";
+
+        using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+        {
+            MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(query, connection);
+            connection.Open();
+            MySqlConnector.MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                string name = reader.GetString(1);
+                int xPosition = reader.GetInt32(2);
+                int yPosition = reader.GetInt32(3);
+
+                Panel panel = new Panel
+                {
+                    Size = new Size(156, 97),
+                    Location = new Point(xPosition, yPosition),
+                    BackColor = Color.Gray,
+                    Name = "panel_" + id,
+                    Enabled = true
+                };
+
+                Label label = new Label
+                {
+                    Text = name,
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+                panel.Controls.Add(label);
+
+                panel.MouseDown += new MouseEventHandler(Panel_MouseDown);
+                panel.MouseMove += new MouseEventHandler(Panel_MouseMove);
+                panel.MouseUp += new MouseEventHandler(Panel_MouseUp);
+                panel.DoubleClick += new EventHandler(Panel_DoubleClick);
+
+                this.Controls.Add(panel);
+            }
+
+            reader.Close();
+        }
+    }
+    private void MoveModeButton_Click(object sender, EventArgs e)
+    {
+        isMoveModeEnabled = !isMoveModeEnabled;
+
+        if (isMoveModeEnabled)
+        {
+            AttachMouseHandlers();
+             
+        }
+        else
+        {
+            DetachMouseHandlers();
+            Console.WriteLine("Move mode disabled");
+        }
+    }
+    private void Panel_MouseDown(object? sender, MouseEventArgs e)
+    {
+        if (sender is Panel && e.Button == MouseButtons.Left)
+        {
+            isDragging = true;
+            startPoint = e.Location;
+        }
+    }
+    private void Panel_MouseMove(object? sender, MouseEventArgs e)
+    {
+        if (isDragging && sender is Panel panel)
+        {
+            panel.Left = e.X + panel.Left - startPoint.X;
+            panel.Top = e.Y + panel.Top - startPoint.Y;
+        }
+    }
+    private void Panel_MouseUp(object? sender, MouseEventArgs e)
+    {
+        isDragging = false;
+    }
+    private void Panel_DoubleClick(object? sender, EventArgs e)
+    {
+        FenetreMairiePrinicpale fenetreMairiePrinicpale = new FenetreMairiePrinicpale();
+        fenetreMairiePrinicpale.ShowDialog();
+    }
+    private void AttachMouseHandlers()
+    {
+        foreach (Control control in this.Controls)
+        {
+            if (control is Panel panel)
+            {
+                panel.MouseDown += new MouseEventHandler(Panel_MouseDown);
+                panel.MouseMove += new MouseEventHandler(Panel_MouseMove);
+                panel.MouseUp += new MouseEventHandler(Panel_MouseUp);
+            }
+        }
+    }
+    private void DetachMouseHandlers()
+    {
+        foreach (Control control in this.Controls)
+        {
+            if (control is Panel panel)
+            {
+                panel.MouseDown -= new MouseEventHandler(Panel_MouseDown);
+                panel.MouseMove -= new MouseEventHandler(Panel_MouseMove);
+                panel.MouseUp -= new MouseEventHandler(Panel_MouseUp);
+            }
+        }
     }
     public void Ping()
     {
         // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
-
         bool flagMairiePrincipale = comm.PingGeneral(1);
         bool flagMairieAnnexe = comm.PingGeneral(3);
         bool flagAgora = comm.PingGeneral(5);
@@ -148,22 +238,6 @@ public partial class FenetrePrincipale : Form
         {
             CentreBournotTextBox.BackColor = Color.Red;
         }
-        if (flagLienhart)
-        {
-            LienhartTextBox.BackColor = Color.Green;
-        }
-        else
-        {
-            LienhartTextBox.BackColor = Color.Red;
-        }
-        if (flagEaux)
-        {
-            EauxAssainTextBox.BackColor = Color.Green;
-        }
-        else
-        {
-            EauxAssainTextBox.BackColor = Color.Red;
-        }
         if (flagCTM)
         {
             CTMTextBox.BackColor = Color.Green;
@@ -171,22 +245,6 @@ public partial class FenetrePrincipale : Form
         else
         {
             CTMTextBox.BackColor = Color.Red;
-        }
-        if (flagAbattoirs)
-        {
-            AbattoirsTextBox.BackColor = Color.Green;
-        }
-        else
-        {
-            AbattoirsTextBox.BackColor = Color.Red;
-        }
-        if (flagSTEP)
-        {
-            STEPTextBox.BackColor = Color.Green;
-        }
-        else
-        {
-            STEPTextBox.BackColor = Color.Red;
         }
         if (flagAgora)
         {
@@ -204,10 +262,5 @@ public partial class FenetrePrincipale : Form
         {
             PMTextBox.BackColor = Color.Red;
         }
-    }
-
-    private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        comm.SavePanelPositions();
     }
 }

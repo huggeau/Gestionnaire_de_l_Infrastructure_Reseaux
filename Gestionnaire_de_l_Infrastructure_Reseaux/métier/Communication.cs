@@ -30,7 +30,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
         {
         }
 
-        public void connexionBDD()
+        public string connexionBDD()
         {
             //variable permettant la connexion à la base de données 
 
@@ -40,17 +40,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             password = "Admin07200&";
             connString = $"SERVER={host}; DATABASE={database}; UID={username}; PASSWORD={password}";
 
-            using (conn = new MySqlConnector.MySqlConnection(connString))
-            {
-                try
-                {
-                    conn.Open();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Error: " + e.Message);
-                }
-            }
+            return connString;
         }
 
         //sert à envoyer les pings au différents site du réseaux de la mairie
@@ -157,30 +147,31 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             return listSites;
         }
 
-        public void SavePanelPositions()
-        {
-            connexionBDD();
-            using (var connection = new MySqlConnector.MySqlConnection(connString))
-            {
-                
-                connection.Open();
+        //public void SavePanelPositions()
+        //{
+        //    connexionBDD();
+        //    using (var connection = new MySqlConnector.MySqlConnection(connString))
+        //    {
 
-                // Clear existing data
-                string deleteQuery = "DELETE FROM PanelPosition";
-                using (var command = new MySqlConnector.MySqlCommand(deleteQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
+        //        connection.Open();
 
-                // Insert new position
-                string insertQuery = "INSERT INTO PanelPosition (X, Y) VALUES (@x, @y)";
-                using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@x", FenetrePrincipale.movablePanel.Location.X);
-                    command.Parameters.AddWithValue("@y", FenetrePrincipale.movablePanel.Location.Y);
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
+        //        // Clear existing data
+        //        string deleteQuery = "DELETE FROM PanelPosition";
+        //        using (var command = new MySqlConnector.MySqlCommand(deleteQuery, connection))
+        //        {
+        //            command.ExecuteNonQuery();
+        //        }
+
+        //        // Insert new position
+        //        string insertQuery = "INSERT INTO PanelPosition (X, Y) VALUES (@x, @y)";
+        //        using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@x", FenetrePrincipale.movablePanel.Location.X);
+        //            command.Parameters.AddWithValue("@y", FenetrePrincipale.movablePanel.Location.Y);
+        //            command.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
     }
 }  

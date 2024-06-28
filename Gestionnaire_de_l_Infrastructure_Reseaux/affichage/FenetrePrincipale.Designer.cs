@@ -48,18 +48,6 @@
             panel4 = new Panel();
             CTMTextBox = new TextBox();
             boutonCTM = new Button();
-            panel5 = new Panel();
-            LienhartTextBox = new TextBox();
-            boutonLienhart = new Button();
-            panel6 = new Panel();
-            EauxAssainTextBox = new TextBox();
-            boutonEaux = new Button();
-            panel7 = new Panel();
-            AbattoirsTextBox = new TextBox();
-            boutonAbattoirs = new Button();
-            panel8 = new Panel();
-            STEPTextBox = new TextBox();
-            boutonSTEP = new Button();
             panel9 = new Panel();
             CentreBournotTextBox = new TextBox();
             BoutonCentreBournot = new Button();
@@ -71,10 +59,6 @@
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
-            panel5.SuspendLayout();
-            panel6.SuspendLayout();
-            panel7.SuspendLayout();
-            panel8.SuspendLayout();
             panel9.SuspendLayout();
             panel10.SuspendLayout();
             SuspendLayout();
@@ -133,7 +117,6 @@
             boutonTest.TabIndex = 1;
             boutonTest.Text = "Mairie Principale";
             boutonTest.UseVisualStyleBackColor = true;
-            boutonTest.Click += boutonMairiePrincipale;
             // 
             // MairiePrincipaleTextBlock
             // 
@@ -192,7 +175,6 @@
             boutonMairieAnnexe.TabIndex = 0;
             boutonMairieAnnexe.Text = "Mairie Annexe";
             boutonMairieAnnexe.UseVisualStyleBackColor = true;
-            boutonMairieAnnexe.Click += boutonMairieAnnexe_Click;
             // 
             // panel3
             // 
@@ -251,122 +233,6 @@
             boutonCTM.TabIndex = 0;
             boutonCTM.Text = "CTM";
             boutonCTM.UseVisualStyleBackColor = true;
-            // 
-            // panel5
-            // 
-            panel5.BorderStyle = BorderStyle.FixedSingle;
-            panel5.Controls.Add(LienhartTextBox);
-            panel5.Controls.Add(boutonLienhart);
-            panel5.Location = new Point(209, 188);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(165, 98);
-            panel5.TabIndex = 7;
-            // 
-            // LienhartTextBox
-            // 
-            LienhartTextBox.Enabled = false;
-            LienhartTextBox.Location = new Point(3, 38);
-            LienhartTextBox.Multiline = true;
-            LienhartTextBox.Name = "LienhartTextBox";
-            LienhartTextBox.Size = new Size(157, 47);
-            LienhartTextBox.TabIndex = 1;
-            // 
-            // boutonLienhart
-            // 
-            boutonLienhart.ForeColor = SystemColors.WindowText;
-            boutonLienhart.Location = new Point(3, 3);
-            boutonLienhart.Name = "boutonLienhart";
-            boutonLienhart.Size = new Size(157, 29);
-            boutonLienhart.TabIndex = 0;
-            boutonLienhart.Text = "Lienhart";
-            boutonLienhart.UseVisualStyleBackColor = true;
-            // 
-            // panel6
-            // 
-            panel6.BorderStyle = BorderStyle.FixedSingle;
-            panel6.Controls.Add(EauxAssainTextBox);
-            panel6.Controls.Add(boutonEaux);
-            panel6.Location = new Point(12, 188);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(165, 98);
-            panel6.TabIndex = 8;
-            // 
-            // EauxAssainTextBox
-            // 
-            EauxAssainTextBox.Enabled = false;
-            EauxAssainTextBox.Location = new Point(3, 38);
-            EauxAssainTextBox.Multiline = true;
-            EauxAssainTextBox.Name = "EauxAssainTextBox";
-            EauxAssainTextBox.Size = new Size(157, 47);
-            EauxAssainTextBox.TabIndex = 1;
-            // 
-            // boutonEaux
-            // 
-            boutonEaux.ForeColor = SystemColors.WindowText;
-            boutonEaux.Location = new Point(3, 3);
-            boutonEaux.Name = "boutonEaux";
-            boutonEaux.Size = new Size(157, 29);
-            boutonEaux.TabIndex = 0;
-            boutonEaux.Text = "Eaux et Assaini";
-            boutonEaux.UseVisualStyleBackColor = true;
-            // 
-            // panel7
-            // 
-            panel7.BorderStyle = BorderStyle.FixedSingle;
-            panel7.Controls.Add(AbattoirsTextBox);
-            panel7.Controls.Add(boutonAbattoirs);
-            panel7.Location = new Point(213, 48);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(165, 98);
-            panel7.TabIndex = 9;
-            // 
-            // AbattoirsTextBox
-            // 
-            AbattoirsTextBox.Enabled = false;
-            AbattoirsTextBox.Location = new Point(3, 38);
-            AbattoirsTextBox.Multiline = true;
-            AbattoirsTextBox.Name = "AbattoirsTextBox";
-            AbattoirsTextBox.Size = new Size(157, 47);
-            AbattoirsTextBox.TabIndex = 1;
-            // 
-            // boutonAbattoirs
-            // 
-            boutonAbattoirs.ForeColor = SystemColors.WindowText;
-            boutonAbattoirs.Location = new Point(3, 3);
-            boutonAbattoirs.Name = "boutonAbattoirs";
-            boutonAbattoirs.Size = new Size(157, 29);
-            boutonAbattoirs.TabIndex = 0;
-            boutonAbattoirs.Text = "Abattoirs";
-            boutonAbattoirs.UseVisualStyleBackColor = true;
-            // 
-            // panel8
-            // 
-            panel8.BorderStyle = BorderStyle.FixedSingle;
-            panel8.Controls.Add(STEPTextBox);
-            panel8.Controls.Add(boutonSTEP);
-            panel8.Location = new Point(16, 48);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(165, 98);
-            panel8.TabIndex = 10;
-            // 
-            // STEPTextBox
-            // 
-            STEPTextBox.Enabled = false;
-            STEPTextBox.Location = new Point(3, 38);
-            STEPTextBox.Multiline = true;
-            STEPTextBox.Name = "STEPTextBox";
-            STEPTextBox.Size = new Size(157, 47);
-            STEPTextBox.TabIndex = 1;
-            // 
-            // boutonSTEP
-            // 
-            boutonSTEP.ForeColor = SystemColors.WindowText;
-            boutonSTEP.Location = new Point(3, 3);
-            boutonSTEP.Name = "boutonSTEP";
-            boutonSTEP.Size = new Size(157, 29);
-            boutonSTEP.TabIndex = 0;
-            boutonSTEP.Text = "STEP";
-            boutonSTEP.UseVisualStyleBackColor = true;
             // 
             // panel9
             // 
@@ -434,10 +300,6 @@
             ClientSize = new Size(1513, 729);
             Controls.Add(panel10);
             Controls.Add(panel9);
-            Controls.Add(panel8);
-            Controls.Add(panel7);
-            Controls.Add(panel6);
-            Controls.Add(panel5);
             Controls.Add(panel4);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -448,7 +310,6 @@
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
             FormClosing += FenetrePrincipale_FormClosing;
-            Load += FenetrePrincipale_Load;
             menuStripFenetrePrincipale.ResumeLayout(false);
             menuStripFenetrePrincipale.PerformLayout();
             panel1.ResumeLayout(false);
@@ -459,14 +320,6 @@
             panel3.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
-            panel7.ResumeLayout(false);
-            panel7.PerformLayout();
-            panel8.ResumeLayout(false);
-            panel8.PerformLayout();
             panel9.ResumeLayout(false);
             panel9.PerformLayout();
             panel10.ResumeLayout(false);
@@ -495,18 +348,6 @@
         private Panel panel4;
         private TextBox CTMTextBox;
         private Button boutonCTM;
-        private Panel panel5;
-        private TextBox LienhartTextBox;
-        private Button boutonLienhart;
-        private Panel panel6;
-        private TextBox EauxAssainTextBox;
-        private Button boutonEaux;
-        private Panel panel7;
-        private TextBox AbattoirsTextBox;
-        private Button boutonAbattoirs;
-        private Panel panel8;
-        private TextBox STEPTextBox;
-        private Button boutonSTEP;
         private Panel panel9;
         private TextBox CentreBournotTextBox;
         private Button BoutonCentreBournot;
