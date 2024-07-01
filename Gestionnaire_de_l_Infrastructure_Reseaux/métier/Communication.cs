@@ -43,7 +43,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
         }
 
         //sert à envoyer les pings au différents site du réseaux de la mairie
-        public bool PingGeneral(int site)
+        public bool PingGeneral(int id)
         {
             connexionBDD();
             int compteur = 0;
@@ -53,43 +53,43 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
                 bool flagPing = false;
                 try
                 {
-                    // on ouvre la BDD puis on lui demande une requête
-                    conn.Open();
-                    MySqlConnector.MySqlCommand commandePing = conn.CreateCommand();
-                    commandePing.CommandText = $"SELECT id, ip FROM Materiel_Reseau WHERE id_site={site};";
+                        conn.Open();
+                        MySqlConnector.MySqlCommand commandePing = conn.CreateCommand();
+                        commandePing.CommandText = $"SELECT ip FROM Materiel_Reseau WHERE id_site={id};";
 
-                    // ici on créer un reader qui va lire le résultat de la commande 
-                    MySqlConnector.MySqlDataReader readerPing = commandePing.ExecuteReader();
-                    ArrayList ip = new ArrayList();
+                        // ici on créer un reader qui va lire le résultat de la commande 
+                        MySqlConnector.MySqlDataReader readerPing = commandePing.ExecuteReader();
+                        ArrayList ip = new ArrayList();
 
-                    // on dit de prendre toute les options à la disposition de la variable Ping options.
-                    options.DontFragment = true;
+                        // on dit de prendre toute les options à la disposition de la variable Ping options.
+                        options.DontFragment = true;
 
-                    // créer un buffer de 32 octets de données à transmettre.
-                    string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                    byte[] buffer = Encoding.ASCII.GetBytes(data);
-                    int timeout = 120;
+                        // créer un buffer de 32 octets de données à transmettre.
+                        string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                        byte[] buffer = Encoding.ASCII.GetBytes(data);
+                        int timeout = 120;
 
-                    //le reader va lire les résultat et les mettres dans un tableau
-                    while (readerPing.Read())
-                    {
-                        ip.Add(readerPing["ip"]);
-                    }
-
-                    //sert à ping les @ip qui seront dans la liste des @ip
-                    foreach (string add_ip in ip)
-                    {
-                        pingReply = pingSender.Send($"{add_ip}", timeout, buffer, options);
-                        //sert à savoir si le ping a obtenu une réponse positive ou négative et modifie le flag en conséquence.
-                        if (pingReply.Status == IPStatus.Success)
+                        //le reader va lire les résultat et les mettres dans un tableau
+                        while (readerPing.Read())
                         {
-                            flagPing = true;
+                            ip.Add(readerPing["ip"]);
                         }
-                        else
+
+                        //sert à ping les @ip qui seront dans la liste des @ip
+                        foreach (string add_ip in ip)
                         {
-                            compteur++;
+                            pingReply = pingSender.Send($"{add_ip}", timeout, buffer, options);
+                            //sert à savoir si le ping a obtenu une réponse positive ou négative et modifie le flag en conséquence.
+                            if (pingReply.Status == IPStatus.Success)
+                            {
+                                flagPing = true;
+                            }
+                            else
+                            {
+                                compteur++;
+                            }
                         }
-                    }
+                    
                 }
                 catch (Exception e)
                 {
@@ -104,10 +104,26 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 
             }
         }
+        public ArrayList RemplirListSite()
+        {
+            ArrayList site = new ArrayList();
+            connexionBDD();
+            // on ouvre la BDD puis on lui demande une requête
+            using (conn = new MySqlConnector.MySqlConnection(connString))
+            {
+                conn.Open();
+                MySqlConnector.MySqlCommand commandSite = conn.CreateCommand();
+                commandSite.CommandText = "SELECT id FROM Site ";
 
-        
+                MySqlConnector.MySqlDataReader readerSite = commandSite.ExecuteReader();
+                while (readerSite.Read())
+                {
+                    int id = readerSite.GetInt32(0);
 
-        
-
+                    site.Add(id);
+                }
+            }
+            return site;
+        }
     }
 }  

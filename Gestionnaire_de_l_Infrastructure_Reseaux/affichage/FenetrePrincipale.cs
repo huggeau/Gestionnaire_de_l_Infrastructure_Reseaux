@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 using System.DirectoryServices.ActiveDirectory;
+using System.Collections;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux;
 
@@ -22,10 +23,11 @@ public partial class FenetrePrincipale : Form
 
     //méthode créer par le designer et modifié par le développeur
 
-    //sert à ce connecter à la base de données et de modifier l'affichage des données.
     public FenetrePrincipale()
     {
         InitializeComponent();
+
+        // initialise les panels généré lors du chargement de la page
 
         if (this.InvokeRequired)
         {
@@ -101,7 +103,7 @@ public partial class FenetrePrincipale : Form
     private void LoadPanelsFromDatabase()
     {
 
-        string query = "SELECT Id, Nom, XPosition, YPosition FROM Site ";
+        string query = "SELECT id, nom, XPosition, YPosition FROM Site ";
 
         using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
         {
@@ -126,6 +128,7 @@ public partial class FenetrePrincipale : Form
                     Name = "panel" + id,
                     Enabled = true,
                     Visible = true,
+                    
                 };
 
                 Label label = new Label
@@ -196,20 +199,23 @@ public partial class FenetrePrincipale : Form
     }
     public void Ping()
     {
+        ArrayList site = comm.RemplirListSite();
         // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
-        bool flagMairiePrincipale = comm.PingGeneral(1);
-        bool flagMairieAnnexe = comm.PingGeneral(3);
-        bool flagAgora = comm.PingGeneral(5);
-        bool flagCentreLeBournot = comm.PingGeneral(6);
-        bool flagPM = comm.PingGeneral(7);
-        bool flag18A = comm.PingGeneral(8);
-        bool flagCTM = comm.PingGeneral(10);
-        bool flagLienhart = comm.PingGeneral(11);
-        bool flagEaux = comm.PingGeneral(12);
-        bool flagAbattoirs = comm.PingGeneral(13);
-        bool flagSTEP = comm.PingGeneral(14);
-        bool flagChateau = comm.PingGeneral(25);
-
+        foreach (int id in site)
+        {
+            
+            for (int i = 0; i < site.Count; i++)
+            {
+                if (comm.PingGeneral(id))
+                {
+                    panels[i].BackColor = Color.Green;
+                }
+                else
+                {
+                    panels[i].BackColor= Color.Red;
+                }
+            }
+        }
         // ce sert des différents flags pour changer la couleur pour savoir si les pings sont bon ou pas
 
     }
