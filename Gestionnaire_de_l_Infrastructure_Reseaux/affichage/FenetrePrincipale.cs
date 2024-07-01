@@ -137,6 +137,7 @@ public partial class FenetrePrincipale : Form
                     Dock = DockStyle.Fill,
                     TextAlign = ContentAlignment.MiddleCenter
                 };
+
                 panel.Controls.Add(label);
 
                 Lpanel.Add(panel); // ajoute les panels à la liste 
@@ -199,25 +200,22 @@ public partial class FenetrePrincipale : Form
     }
     public void Ping()
     {
-        ArrayList site = comm.RemplirListSite();
-        // initialise chaque flag afin de savoir si les pings des sites sont bon ou pas 
-        foreach (int id in site)
+        // initialise la liste des id de tout les sites de la BDD
+        List<int> siteIds = comm.RemplirListSite();
+
+        // vient tester sur tout les sites si leurs éléments sont pingable et change l'affichage celon le résultat sortie
+        for (int i = 0; i < siteIds.Count; i++)
         {
-            
-            for (int i = 0; i < site.Count; i++)
+            int siteId = siteIds[i];
+            if (comm.PingGeneral(siteId))
             {
-                if (comm.PingGeneral(id))
-                {
-                    panels[i].BackColor = Color.Green;
-                }
-                else
-                {
-                    panels[i].BackColor= Color.Red;
-                }
+                panels[i].BackColor = Color.Green;
+            }
+            else
+            {
+                panels[i].BackColor = Color.Red;
             }
         }
-        // ce sert des différents flags pour changer la couleur pour savoir si les pings sont bon ou pas
-
     }
 
     //public void SavePanelPositions()

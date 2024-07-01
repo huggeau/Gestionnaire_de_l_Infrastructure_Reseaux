@@ -104,9 +104,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 
             }
         }
-        public ArrayList RemplirListSite()
+        public List<int> RemplirListSite()
         {
-            ArrayList site = new ArrayList();
+            List<int> site = new List<int>();
             connexionBDD();
             // on ouvre la BDD puis on lui demande une requête
             using (conn = new MySqlConnector.MySqlConnection(connString))
