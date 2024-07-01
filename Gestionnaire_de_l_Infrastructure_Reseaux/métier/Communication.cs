@@ -105,72 +105,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             }
         }
 
-        public List<Site> RemplissageSite()
-        {
-            connexionBDD();
-            List<Site> listSites = new List<Site>();
-            ArrayList idSite = new ArrayList();
-            ArrayList nomSite = new ArrayList();
-            using (conn = new MySqlConnector.MySqlConnection(connString))
-            {
-                try
-                {
-                    // on ouvre la BDD puis on lui demande une requête
-                    conn.Open();
-                    MySqlConnector.MySqlCommand commandeRemplissageSite = conn.CreateCommand();
-                    commandeRemplissageSite.CommandText = $"SELECT id, nom FROM Site;";
+        
 
-                    // ici on créer un reader qui va lire le résultat de la commande 
-                    MySqlConnector.MySqlDataReader reader = commandeRemplissageSite.ExecuteReader();
-
-                    //le reader va lire les résultat et les mettres dans un tableau
-                    while (reader.Read())
-                    {
-                        idSite.Add(reader["id"]);
-                        nomSite.Add(reader["nom"]);
-                    }
-
-                    for (int i = 0; i < idSite.Count; i++)
-                    {
-                        Site site = new Site(idSite[i].ToString(), nomSite[i].ToString());
-
-                        listSites.Add(site);
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-            return listSites;
-        }
-
-        //public void SavePanelPositions()
-        //{
-        //    connexionBDD();
-        //    using (var connection = new MySqlConnector.MySqlConnection(connString))
-        //    {
-
-        //        connection.Open();
-
-        //        // Clear existing data
-        //        string deleteQuery = "DELETE FROM PanelPosition";
-        //        using (var command = new MySqlConnector.MySqlCommand(deleteQuery, connection))
-        //        {
-        //            command.ExecuteNonQuery();
-        //        }
-
-        //        // Insert new position
-        //        string insertQuery = "INSERT INTO PanelPosition (X, Y) VALUES (@x, @y)";
-        //        using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
-        //        {
-        //            command.Parameters.AddWithValue("@x", FenetrePrincipale.movablePanel.Location.X);
-        //            command.Parameters.AddWithValue("@y", FenetrePrincipale.movablePanel.Location.Y);
-        //            command.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
+        
 
     }
 }  

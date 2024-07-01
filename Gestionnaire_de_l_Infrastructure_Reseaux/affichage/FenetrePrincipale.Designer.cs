@@ -37,7 +37,6 @@
             forcerUnPingToolStripMenuItem = new ToolStripMenuItem();
             activerLeDeplacementDesPanelsToolStripMenuItem = new ToolStripMenuItem();
             timerFenetrePrinicipale = new System.Windows.Forms.Timer(components);
-            panel1 = new Panel();
             menuStripFenetrePrincipale.SuspendLayout();
             SuspendLayout();
             // 
@@ -98,17 +97,6 @@
             timerFenetrePrinicipale.Interval = 360000;
             timerFenetrePrinicipale.Tick += timer_Tick;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.Crimson;
-            panel1.Location = new Point(638, 271);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(250, 125);
-            panel1.TabIndex = 1;
-            panel1.MouseDown += panel1_MouseDown;
-            panel1.MouseMove += panel1_MouseMove;
-            panel1.MouseUp += panel1_MouseUp;
-            // 
             // FenetrePrincipale
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -116,7 +104,6 @@
             AutoScroll = true;
             BackColor = Color.Cornsilk;
             ClientSize = new Size(1513, 729);
-            Controls.Add(panel1);
             Controls.Add(menuStripFenetrePrincipale);
             ForeColor = SystemColors.Window;
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -140,6 +127,5 @@
         private System.Windows.Forms.Timer timerFenetrePrinicipale;
         private ToolStripMenuItem forcerUnPingToolStripMenuItem;
         private ToolStripMenuItem activerLeDeplacementDesPanelsToolStripMenuItem;
-        private Panel panel1;
     }
 }

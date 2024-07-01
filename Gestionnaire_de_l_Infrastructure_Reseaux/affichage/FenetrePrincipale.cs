@@ -27,10 +27,20 @@ public partial class FenetrePrincipale : Form
     {
         InitializeComponent();
 
+        if (this.InvokeRequired)
+        {
+            this.Invoke(new Action(LoadPanelsFromDatabase));
+        }
+        else
+        {
+            LoadPanelsFromDatabase();
+        }
         this.Load += new EventHandler(FenetrePrincipale_Load);
-        this.DoubleClick += new EventHandler(Panel_DoubleClick);
 
-
+        for (int i = 0; i < panels.Length; i++)
+        {
+            panels[i].BringToFront();
+        }
 
 
         //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
@@ -113,8 +123,9 @@ public partial class FenetrePrincipale : Form
                     Size = new Size(156, 97),
                     Location = new Point(xPosition, yPosition),
                     BackColor = Color.Gray,
-                    Name = "panel_" + id,
-                    Enabled = true
+                    Name = "panel" + id,
+                    Enabled = true,
+                    Visible = true,
                 };
 
                 Label label = new Label
@@ -124,11 +135,6 @@ public partial class FenetrePrincipale : Form
                     TextAlign = ContentAlignment.MiddleCenter
                 };
                 panel.Controls.Add(label);
-
-                panel.MouseDown += new MouseEventHandler(Panel_MouseDown);
-                panel.MouseMove += new MouseEventHandler(Panel_MouseMove);
-                panel.MouseUp += new MouseEventHandler(Panel_MouseUp);
-                panel.DoubleClick += new EventHandler(Panel_DoubleClick);
 
                 Lpanel.Add(panel); // ajoute les panels à la liste 
 
@@ -146,7 +152,7 @@ public partial class FenetrePrincipale : Form
     }
     private void Panel_MouseDown(object? sender, MouseEventArgs e)
     {
-        if (isMoveModeEnabled && sender is Panel)
+        if (isMoveModeEnabled )
         {
             isDragging = true;
             startPoint = e.Location;
@@ -169,11 +175,6 @@ public partial class FenetrePrincipale : Form
             isDragging = false;
             Console.WriteLine("MouseUp triggered");
         }
-    }
-    private void Panel_DoubleClick(object? sender, EventArgs e)
-    {
-        FenetreMairiePrinicpale fenetreMairiePrinicpale = new FenetreMairiePrinicpale();
-        fenetreMairiePrinicpale.ShowDialog();
     }
     private void AttachMouseHandlers()
     {
@@ -213,32 +214,22 @@ public partial class FenetrePrincipale : Form
 
     }
 
-    private void panel1_MouseDown(object sender, MouseEventArgs e)
-    {
-        if (isMoveModeEnabled && sender is Panel)
-        {
-            isDragging = true;
-            startPoint = e.Location;
-            Console.WriteLine("MouseDown triggered");
-        }
-    }
+    //public void SavePanelPositions()
+    //{
+        
+    //    using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+    //    {
 
-    private void panel1_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (isDragging && isMoveModeEnabled && sender is Panel panel)
-        {
-            panel.Left = e.X + panel.Left - startPoint.X;
-            panel.Top = e.Y + panel.Top - startPoint.Y;
-            Console.WriteLine($"MouseMove triggered for {panel.Name}");
-        }
-    }
+    //        connection.Open();
 
-    private void panel1_MouseUp(object sender, MouseEventArgs e)
-    {
-        if (isMoveModeEnabled)
-        {
-            isDragging = false;
-            Console.WriteLine("MouseUp triggered");
-        }
-    }
+    //        // Insert new position
+    //        string insertQuery = "INSERT INTO PanelPosition (X, Y) VALUES (@x, @y)";
+    //        using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
+    //        {
+    //            command.Parameters.AddWithValue("@x", FenetrePrincipale.panels[].Location.X);
+    //            command.Parameters.AddWithValue("@y", FenetrePrincipale.movablePanel.Location.Y);
+    //            command.ExecuteNonQuery();
+    //        }
+    //    }
+    //}
 }
