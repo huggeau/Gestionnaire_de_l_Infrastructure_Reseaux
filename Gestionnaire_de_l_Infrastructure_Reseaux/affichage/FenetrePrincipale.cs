@@ -129,11 +129,7 @@ public partial class FenetrePrincipale : Form
                     AllowDrop = true,
 
                 };
-
-                
-
                 Lbouton.Add(bouton); // ajoute les boutons à la liste 
-
 
                 panelPrinicpale.Controls.Add(bouton);
 

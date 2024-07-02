@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using MySqlConnector;
 using System.Collections;
 using System.Security.Policy;
+using Microsoft.VisualBasic.Devices;
+using System.Threading;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 {
@@ -104,6 +106,33 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 
             }
         }
+
+        //sert à envoyer un  ping sur 1 ip bien précise
+        public bool PingSpecifique(string ip)
+        {
+            bool flagPing = false;
+
+            options.DontFragment = true;
+
+            // créer un buffer de 32 octets de données à transmettre.
+            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            int timeout = 120;
+
+            pingReply = pingSender.Send($"{ip}", timeout, buffer, options);
+            //sert à savoir si le ping a obtenu une réponse positive ou négative et modifie le flag en conséquence.
+            if (pingReply.Status == IPStatus.Success)
+            {
+                flagPing = true;
+            }
+            else
+            {
+                flagPing = false;
+            }
+
+            return flagPing;
+        }
+
         //sert à remplir la liste de tout les sites depuis la BDD
         public List<int> RemplirListSite()
         {
