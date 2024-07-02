@@ -109,9 +109,10 @@
             // panelPrinicpale
             // 
             panelPrinicpale.AutoSize = true;
-            panelPrinicpale.Location = new Point(0, 31);
+            panelPrinicpale.Dock = DockStyle.Fill;
+            panelPrinicpale.Location = new Point(0, 28);
             panelPrinicpale.Name = "panelPrinicpale";
-            panelPrinicpale.Size = new Size(1513, 695);
+            panelPrinicpale.Size = new Size(1513, 701);
             panelPrinicpale.TabIndex = 1;
             // 
             // FenetrePrincipale

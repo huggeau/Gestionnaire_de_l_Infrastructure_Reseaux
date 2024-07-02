@@ -1,6 +1,6 @@
 ﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    partial class FenetreMairiePrinicpale
+    partial class FenetreAdministrationSite
     {
         /// <summary>
         /// Required designer variable.
@@ -28,14 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
-            fenetrePrincipaleBindingSource = new BindingSource(components);
+            panelPrinicpale = new Panel();
             menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)fenetrePrincipaleBindingSource).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -69,23 +67,27 @@
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
-            // fenetrePrincipaleBindingSource
+            // panelPrinicpale
             // 
-            fenetrePrincipaleBindingSource.DataSource = typeof(FenetrePrincipale);
+            panelPrinicpale.Dock = DockStyle.Fill;
+            panelPrinicpale.Location = new Point(0, 28);
+            panelPrinicpale.Name = "panelPrinicpale";
+            panelPrinicpale.Size = new Size(858, 564);
+            panelPrinicpale.TabIndex = 1;
             // 
-            // FenetreDeGestion
+            // FenetreAdministrationSite
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(858, 592);
+            Controls.Add(panelPrinicpale);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
-            Name = "FenetreDeGestion";
+            Name = "FenetreAdministrationSite";
             Text = "Fenêtre d'Administration";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)fenetrePrincipaleBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -96,6 +98,6 @@
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
-        private BindingSource fenetrePrincipaleBindingSource;
+        private Panel panelPrinicpale;
     }
 }

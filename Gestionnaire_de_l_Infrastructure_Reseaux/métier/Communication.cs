@@ -104,6 +104,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 
             }
         }
+        //sert à remplir la liste de tout les sites depuis la BDD
         public List<int> RemplirListSite()
         {
             List<int> site = new List<int>();
@@ -126,4 +127,4 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             return site;
         }
     }
-}  
+}

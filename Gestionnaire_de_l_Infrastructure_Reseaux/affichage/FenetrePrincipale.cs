@@ -27,8 +27,8 @@ public partial class FenetrePrincipale : Form
     public FenetrePrincipale()
     {
         InitializeComponent();
-        
     }
+
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
         FenetreAjout fenetreAjout = new FenetreAjout();
@@ -44,16 +44,20 @@ public partial class FenetrePrincipale : Form
         FenetreRecherche fenetreRecherche = new FenetreRecherche();
         fenetreRecherche.ShowDialog();
     }
+
     //sert à lancer les pings vers les infrastructure toute les 10 minutes
     private void timer_Tick(object sender, EventArgs e)
     {
         Ping();
     }
+
     //sert à forcer le lancement de la méthode EnvoiePing().
     private void forcerUnPingToolStripMenuItem_Click(object sender, EventArgs e)
     {
         Ping();
     }
+   
+    //sauvegarde la position des sites juste avant la fermetrure de la fenetre
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
         SaveButtonPositionsInDatabase();
@@ -80,12 +84,18 @@ public partial class FenetrePrincipale : Form
     private void loadLaBddToolStripMenuItem_Click(object sender, EventArgs e)
     {
         LoadButtonsFromDatabase();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].Click += Button_Click;
+        }
         Ping();
     }
 
 
 
     // méthode créer par le développeur
+
+    //methode permettant de créer x boutons ( x étant l jombre de site qu'il y aura dans la bdd )
     private void LoadButtonsFromDatabase()
     {
 
@@ -112,6 +122,7 @@ public partial class FenetrePrincipale : Form
                     Location = new Point(xPosition, yPosition),
                     BackColor = Color.Gray,
                     Name = "bouton" + id,
+                    Tag = id,
                     Enabled = true,
                     Visible = true,
                     Text = name,
@@ -119,7 +130,7 @@ public partial class FenetrePrincipale : Form
 
                 };
 
-                bouton.DoubleClick += Button_DoubleClick;
+                
 
                 Lbouton.Add(bouton); // ajoute les boutons à la liste 
 
@@ -135,6 +146,8 @@ public partial class FenetrePrincipale : Form
             buttons = Lbouton.ToArray();
         }
     }
+
+    //les méthodes suivantes vont servir à pouvoir bouger nos sites afin de les déplacer ou l'on veut sur la fenetre
     private void Button_MouseDown(object? sender, MouseEventArgs e)
     {
         if (isMoveModeEnabled)
@@ -161,11 +174,18 @@ public partial class FenetrePrincipale : Form
             Console.WriteLine("MouseUp triggered");
         }
     }
-    private void Button_DoubleClick(object? sender, EventArgs e)
+
+    // méthode qui  quand on clique sur un site ouvre la fenetre d'administration du site
+    private void Button_Click(object? sender, EventArgs e)
     {
-        FenetreMairiePrinicpale fenetreMairiePrinicpale = new FenetreMairiePrinicpale();
+        Button bouton = (Button)sender;
+        int id = (int)bouton.Tag;
+        FenetreAdministrationSite fenetreMairiePrinicpale = new FenetreAdministrationSite(id);
         fenetreMairiePrinicpale.ShowDialog();
     }
+
+    //les méthodes suivantes sont relié a un bouton et servent a activer/ desactiver
+    //les méthodes de déplacement et de clique des sites
     private void AttachMouseHandlers()
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -173,6 +193,7 @@ public partial class FenetrePrincipale : Form
             buttons[i].MouseDown += Button_MouseDown;
             buttons[i].MouseMove += Button_MouseMove;
             buttons[i].MouseUp += Button_MouseUp;
+            buttons[i].Click -= Button_Click;
         }
     }
     private void DetachMouseHandlers()
@@ -182,8 +203,11 @@ public partial class FenetrePrincipale : Form
             buttons[i].MouseDown -= Button_MouseDown;
             buttons[i].MouseMove -= Button_MouseMove;
             buttons[i].MouseUp -= Button_MouseUp;
+            buttons[i].Click += Button_Click;
         }
     }
+
+    //sert a changé la couleur des sites selon leur résultat des pings
     public void Ping()
     {
         // initialise la liste des id de tout les sites de la BDD
@@ -204,6 +228,7 @@ public partial class FenetrePrincipale : Form
         }
     }
 
+    //sert a enregistrer la position des sites sur la fenetre dans la bdd
     public void SaveButtonPositionsInDatabase()
     {
         using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))

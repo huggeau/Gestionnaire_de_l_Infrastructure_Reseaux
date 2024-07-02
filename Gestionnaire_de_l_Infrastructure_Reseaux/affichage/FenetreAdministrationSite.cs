@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    public partial class FenetreMairiePrinicpale : Form
+    public partial class FenetreAdministrationSite : Form
     {
-        public FenetreMairiePrinicpale()
+        private int idSite;
+        public FenetreAdministrationSite(int id)
         {
             InitializeComponent();
-            
+            idSite = id;
         }
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -28,6 +29,10 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         {
             FenetreSupprimer fenetreSupprimer = new FenetreSupprimer();
             fenetreSupprimer.ShowDialog();
+        }
+
+        public void AfficherTextBox(object? sender, EventArgs e)
+        {
         }
     }
 }
