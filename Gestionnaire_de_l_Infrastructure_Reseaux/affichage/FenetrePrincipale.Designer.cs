@@ -36,14 +36,16 @@
             rechercheToolStripMenuItem = new ToolStripMenuItem();
             forcerUnPingToolStripMenuItem = new ToolStripMenuItem();
             activerLeDeplacementDesPanelsToolStripMenuItem = new ToolStripMenuItem();
+            loadLaBddToolStripMenuItem = new ToolStripMenuItem();
             timerFenetrePrinicipale = new System.Windows.Forms.Timer(components);
+            panelPrinicpale = new Panel();
             menuStripFenetrePrincipale.SuspendLayout();
             SuspendLayout();
             // 
             // menuStripFenetrePrincipale
             // 
             menuStripFenetrePrincipale.ImageScalingSize = new Size(20, 20);
-            menuStripFenetrePrincipale.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, rechercheToolStripMenuItem, forcerUnPingToolStripMenuItem, activerLeDeplacementDesPanelsToolStripMenuItem });
+            menuStripFenetrePrincipale.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, rechercheToolStripMenuItem, forcerUnPingToolStripMenuItem, activerLeDeplacementDesPanelsToolStripMenuItem, loadLaBddToolStripMenuItem });
             menuStripFenetrePrincipale.Location = new Point(0, 0);
             menuStripFenetrePrincipale.Name = "menuStripFenetrePrincipale";
             menuStripFenetrePrincipale.Size = new Size(1513, 28);
@@ -92,10 +94,25 @@
             activerLeDeplacementDesPanelsToolStripMenuItem.Text = "Activer le Deplacement des Panels";
             activerLeDeplacementDesPanelsToolStripMenuItem.Click += activerLeDeplacementDesPanelsToolStripMenuItem_Click;
             // 
+            // loadLaBddToolStripMenuItem
+            // 
+            loadLaBddToolStripMenuItem.Name = "loadLaBddToolStripMenuItem";
+            loadLaBddToolStripMenuItem.Size = new Size(100, 24);
+            loadLaBddToolStripMenuItem.Text = "load la Bdd";
+            loadLaBddToolStripMenuItem.Click += loadLaBddToolStripMenuItem_Click;
+            // 
             // timerFenetrePrinicipale
             // 
             timerFenetrePrinicipale.Interval = 360000;
             timerFenetrePrinicipale.Tick += timer_Tick;
+            // 
+            // panelPrinicpale
+            // 
+            panelPrinicpale.AutoSize = true;
+            panelPrinicpale.Location = new Point(0, 31);
+            panelPrinicpale.Name = "panelPrinicpale";
+            panelPrinicpale.Size = new Size(1513, 695);
+            panelPrinicpale.TabIndex = 1;
             // 
             // FenetrePrincipale
             // 
@@ -104,6 +121,7 @@
             AutoScroll = true;
             BackColor = Color.Cornsilk;
             ClientSize = new Size(1513, 729);
+            Controls.Add(panelPrinicpale);
             Controls.Add(menuStripFenetrePrincipale);
             ForeColor = SystemColors.Window;
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -127,5 +145,7 @@
         private System.Windows.Forms.Timer timerFenetrePrinicipale;
         private ToolStripMenuItem forcerUnPingToolStripMenuItem;
         private ToolStripMenuItem activerLeDeplacementDesPanelsToolStripMenuItem;
+        private Panel panelPrinicpale;
+        private ToolStripMenuItem loadLaBddToolStripMenuItem;
     }
 }

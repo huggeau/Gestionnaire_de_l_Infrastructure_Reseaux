@@ -17,7 +17,7 @@ public partial class FenetrePrincipale : Form
     private bool isMoveModeEnabled = false;
     private Point startPoint = new Point(0, 0);
 
-    private Panel[]? panels; // tableau qui va contenir tout les paneaux
+    private Button[]? buttons; // tableau qui va contenir tout les paneaux
 
 
 
@@ -28,25 +28,24 @@ public partial class FenetrePrincipale : Form
         InitializeComponent();
 
         // initialise les panels généré lors du chargement de la page
+        //if (this.InvokeRequired)
+        //{
+        //    this.Invoke(new Action(LoadPanelsFromDatabase));
+        //}
+        //else
+        //{
+        //    LoadPanelsFromDatabase();
+        //}
+        //this.Load += new EventHandler(FenetrePrincipale_Load);
 
-        if (this.InvokeRequired)
-        {
-            this.Invoke(new Action(LoadPanelsFromDatabase));
-        }
-        else
-        {
-            LoadPanelsFromDatabase();
-        }
-        this.Load += new EventHandler(FenetrePrincipale_Load);
-
-        for (int i = 0; i < panels.Length; i++)
-        {
-            panels[i].BringToFront();
-        }
+        //for (int i = 0; i < buttons.Length; i++)
+        //{
+        //    buttons[i].BringToFront();
+        //}
 
 
         //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
-        Ping();
+        //Ping();
     }
 
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,6 +92,10 @@ public partial class FenetrePrincipale : Form
             activerLeDeplacementDesPanelsToolStripMenuItem.BackColor = Color.Silver;
         }
     }
+    private void loadLaBddToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        LoadPanelsFromDatabase();
+    }
 
 
     //méthode créer par le développeur
@@ -111,7 +114,7 @@ public partial class FenetrePrincipale : Form
             connection.Open();
             MySqlConnector.MySqlDataReader reader = command.ExecuteReader();
 
-            List<Panel> Lpanel = new List<Panel>();
+            List<Button> Lbouton = new List<Button>();
 
             while (reader.Read())
             {
@@ -120,59 +123,54 @@ public partial class FenetrePrincipale : Form
                 int xPosition = reader.GetInt32(2);
                 int yPosition = reader.GetInt32(3);
 
-                Panel panel = new Panel
+                Button bouton = new Button
                 {
                     Size = new Size(156, 97),
                     Location = new Point(xPosition, yPosition),
                     BackColor = Color.Gray,
-                    Name = "panel" + id,
+                    Name = "bouton" + id,
                     Enabled = true,
                     Visible = true,
-                    
-                };
-
-                Label label = new Label
-                {
                     Text = name,
-                    Dock = DockStyle.Fill,
-                    TextAlign = ContentAlignment.MiddleCenter
+                    AllowDrop = true,
+
                 };
 
-                panel.Controls.Add(label);
+                bouton.DoubleClick += Button_DoubleClick;
 
-                Lpanel.Add(panel); // ajoute les panels à la liste 
+                Lbouton.Add(bouton); // ajoute les boutons à la liste 
 
 
-                this.Controls.Add(panel);
+                panelPrinicpale.Controls.Add(bouton);
 
                 // Debugging output
-                Console.WriteLine($"Panel created: {panel.Name} at {panel.Location}");
+                Console.WriteLine($"Panel created: {bouton.Name} at {bouton.Location}");
             }
 
             reader.Close();
 
-            panels = Lpanel.ToArray();
+            buttons = Lbouton.ToArray();
         }
     }
-    private void Panel_MouseDown(object? sender, MouseEventArgs e)
+    private void Button_MouseDown(object? sender, MouseEventArgs e)
     {
-        if (isMoveModeEnabled )
+        if (isMoveModeEnabled)
         {
             isDragging = true;
             startPoint = e.Location;
             Console.WriteLine("MouseDown triggered");
         }
     }
-    private void Panel_MouseMove(object? sender, MouseEventArgs e)
+    private void Button_MouseMove(object? sender, MouseEventArgs e)
     {
-        if (isDragging && isMoveModeEnabled && sender is Panel panel)
+        if (isDragging && isMoveModeEnabled && sender is Button button)
         {
-            panel.Left = e.X + panel.Left - startPoint.X;
-            panel.Top = e.Y + panel.Top - startPoint.Y;
-            Console.WriteLine($"MouseMove triggered for {panel.Name}");
+            button.Left = e.X + button.Left - startPoint.X;
+            button.Top = e.Y + button.Top - startPoint.Y;
+            Console.WriteLine($"MouseMove triggered for {button.Name}");
         }
     }
-    private void Panel_MouseUp(object? sender, MouseEventArgs e)
+    private void Button_MouseUp(object? sender, MouseEventArgs e)
     {
         if (isMoveModeEnabled)
         {
@@ -180,22 +178,27 @@ public partial class FenetrePrincipale : Form
             Console.WriteLine("MouseUp triggered");
         }
     }
+    private void Button_DoubleClick(object? sender, EventArgs e)
+    {
+        FenetreMairiePrinicpale fenetreMairiePrinicpale = new FenetreMairiePrinicpale();
+        fenetreMairiePrinicpale.ShowDialog();
+    }
     private void AttachMouseHandlers()
     {
-        foreach (Panel panel in panels)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            panel.MouseDown += new MouseEventHandler(Panel_MouseDown);
-            panel.MouseMove += new MouseEventHandler(Panel_MouseMove);
-            panel.MouseUp += new MouseEventHandler(Panel_MouseUp);
+            buttons[i].MouseDown += Button_MouseDown;
+            buttons[i].MouseMove += Button_MouseMove;
+            buttons[i].MouseUp += Button_MouseUp;
         }
     }
     private void DetachMouseHandlers()
     {
-        foreach (Panel panel in panels)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            panel.MouseDown -= new MouseEventHandler(Panel_MouseDown);
-            panel.MouseMove -= new MouseEventHandler(Panel_MouseMove);
-            panel.MouseUp -= new MouseEventHandler(Panel_MouseUp);
+            buttons[i].MouseDown -= Button_MouseDown;
+            buttons[i].MouseMove -= Button_MouseMove;
+            buttons[i].MouseUp -= Button_MouseUp;
         }
     }
     public void Ping()
@@ -209,30 +212,35 @@ public partial class FenetrePrincipale : Form
             int siteId = siteIds[i];
             if (comm.PingGeneral(siteId))
             {
-                panels[i].BackColor = Color.Green;
+                buttons[i].BackColor = Color.Green;
             }
             else
             {
-                panels[i].BackColor = Color.Red;
+                buttons[i].BackColor = Color.Red;
             }
         }
     }
 
+
+
     //public void SavePanelPositions()
     //{
-        
+
     //    using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
     //    {
 
     //        connection.Open();
 
     //        // Insert new position
-    //        string insertQuery = "INSERT INTO PanelPosition (X, Y) VALUES (@x, @y)";
+    //        string insertQuery = "INSERT INTO PanelPosition (XPosition, YPosition) VALUES (@x, @y)";
     //        using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
     //        {
-    //            command.Parameters.AddWithValue("@x", FenetrePrincipale.panels[].Location.X);
-    //            command.Parameters.AddWithValue("@y", FenetrePrincipale.movablePanel.Location.Y);
-    //            command.ExecuteNonQuery();
+    //            foreach(Panel panel in panels)
+    //            {
+    //              command.Parameters.AddWithValue("@x", panel.Location.X);
+    //              command.Parameters.AddWithValue("@y", panel.Location.Y);
+    //              command.ExecuteNonQuery();
+    //            }
     //        }
     //    }
     //}
