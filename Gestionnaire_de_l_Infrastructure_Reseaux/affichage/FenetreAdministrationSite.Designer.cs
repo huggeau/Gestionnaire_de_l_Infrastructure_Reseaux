@@ -28,18 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
             panelPrinicpale = new Panel();
+            timer1 = new System.Windows.Forms.Timer(components);
+            forcerPingToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, forcerPingToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(858, 28);
@@ -56,14 +59,14 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(159, 26);
+            ajouterToolStripMenuItem.Size = new Size(224, 26);
             ajouterToolStripMenuItem.Text = "ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(159, 26);
+            supprimerToolStripMenuItem.Size = new Size(224, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
@@ -74,6 +77,19 @@
             panelPrinicpale.Name = "panelPrinicpale";
             panelPrinicpale.Size = new Size(858, 564);
             panelPrinicpale.TabIndex = 1;
+            // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 10000;
+            timer1.Tick += timer1_Tick;
+            // 
+            // forcerPingToolStripMenuItem
+            // 
+            forcerPingToolStripMenuItem.Name = "forcerPingToolStripMenuItem";
+            forcerPingToolStripMenuItem.Size = new Size(96, 24);
+            forcerPingToolStripMenuItem.Text = "forcer ping";
+            forcerPingToolStripMenuItem.Click += forcerPingToolStripMenuItem_Click;
             // 
             // FenetreAdministrationSite
             // 
@@ -99,5 +115,7 @@
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
         private Panel panelPrinicpale;
+        private System.Windows.Forms.Timer timer1;
+        private ToolStripMenuItem forcerPingToolStripMenuItem;
     }
 }

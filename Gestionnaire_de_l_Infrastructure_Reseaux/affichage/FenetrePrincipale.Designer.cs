@@ -103,7 +103,8 @@
             // 
             // timerFenetrePrinicipale
             // 
-            timerFenetrePrinicipale.Interval = 360000;
+            timerFenetrePrinicipale.Enabled = true;
+            timerFenetrePrinicipale.Interval = 600000;
             timerFenetrePrinicipale.Tick += timer_Tick;
             // 
             // panelPrinicpale
