@@ -38,6 +38,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             fenetreSupprimer.ShowDialog();
         }
 
+
+        //méthode pour créer les panneaux ou seront affiché les différents éléments matériel d'un site qui sont contenu dans la BDD
+        //et faire un ping initiale afin de savoir s'il réponde ou non
         public void AfficherTextBox()
         {
             List<int> listIds = comm.RemplirListSite();
@@ -105,6 +108,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             panels = Lpanel.ToArray();
         }
 
+        //méthode provoquan un refresh des pings tout les 10 secondes
         private void timer1_Tick(object sender, EventArgs e)
         {
 
@@ -148,6 +152,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
 
+        //méthode qui sert a forcer le refresh des pings 
         private void forcerPingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<int> listIds = comm.RemplirListSite();
