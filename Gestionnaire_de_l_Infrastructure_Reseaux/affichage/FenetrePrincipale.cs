@@ -7,6 +7,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.DirectoryServices.ActiveDirectory;
 using System.Collections;
+using System.Security.Policy;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux;
 
@@ -26,28 +27,8 @@ public partial class FenetrePrincipale : Form
     public FenetrePrincipale()
     {
         InitializeComponent();
-
-        // initialise les panels généré lors du chargement de la page
-        //if (this.InvokeRequired)
-        //{
-        //    this.Invoke(new Action(LoadPanelsFromDatabase));
-        //}
-        //else
-        //{
-        //    LoadPanelsFromDatabase();
-        //}
-        //this.Load += new EventHandler(FenetrePrincipale_Load);
-
-        //for (int i = 0; i < buttons.Length; i++)
-        //{
-        //    buttons[i].BringToFront();
-        //}
-
-
-        //fait un Ping initiale afin de savoir quel site est bon ou à un élément deffectueux
-        //Ping();
+        
     }
-
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
         FenetreAjout fenetreAjout = new FenetreAjout();
@@ -75,8 +56,10 @@ public partial class FenetrePrincipale : Form
     }
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
-        // comm.SavePanelPositions();
+        SaveButtonPositionsInDatabase();
     }
+
+    //méthode permettant d'aciver ou non le déplacement des éléments d'affichage
     private void activerLeDeplacementDesPanelsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         isMoveModeEnabled = !isMoveModeEnabled;
@@ -92,18 +75,18 @@ public partial class FenetrePrincipale : Form
             activerLeDeplacementDesPanelsToolStripMenuItem.BackColor = Color.Silver;
         }
     }
+
+    //méthode permettant de charger tout les site de la BDD 
     private void loadLaBddToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        LoadPanelsFromDatabase();
+        LoadButtonsFromDatabase();
+        Ping();
     }
 
 
-    //méthode créer par le développeur
-    private void FenetrePrincipale_Load(object? sender, EventArgs e)
-    {
-        LoadPanelsFromDatabase();
-    }
-    private void LoadPanelsFromDatabase()
+
+    // méthode créer par le développeur
+    private void LoadButtonsFromDatabase()
     {
 
         string query = "SELECT id, nom, XPosition, YPosition FROM Site ";
@@ -221,27 +204,27 @@ public partial class FenetrePrincipale : Form
         }
     }
 
+    public void SaveButtonPositionsInDatabase()
+    {
+        using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+        {
+            connection.Open();
+            List<int> siteIds = comm.RemplirListSite();
+            // Insert new position
+            for(int i=0; i < siteIds.Count; i++)
+            {
+                int siteId = siteIds[i];
+                string updateQuery = "UPDATE Site SET XPosition = @x, YPosition = @y WHERE id = @id";
 
-
-    //public void SavePanelPositions()
-    //{
-
-    //    using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
-    //    {
-
-    //        connection.Open();
-
-    //        // Insert new position
-    //        string insertQuery = "INSERT INTO PanelPosition (XPosition, YPosition) VALUES (@x, @y)";
-    //        using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
-    //        {
-    //            foreach(Panel panel in panels)
-    //            {
-    //              command.Parameters.AddWithValue("@x", panel.Location.X);
-    //              command.Parameters.AddWithValue("@y", panel.Location.Y);
-    //              command.ExecuteNonQuery();
-    //            }
-    //        }
-    //    }
-    //}
+                using (var command = new MySqlConnector.MySqlCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@x", buttons[i].Location.X);
+                    command.Parameters.AddWithValue("@y", buttons[i].Location.Y);
+                    command.Parameters.AddWithValue("@id", siteId);
+                    command.ExecuteNonQuery();
+                }
+            }
+            
+        }
+    }
 }
