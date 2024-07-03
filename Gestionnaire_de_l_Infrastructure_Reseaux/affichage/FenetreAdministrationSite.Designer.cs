@@ -103,6 +103,7 @@
             MaximizeBox = false;
             Name = "FenetreAdministrationSite";
             Text = "Fenêtre d'Administration";
+            FormClosing += FenetreAdministrationSite_FormClosing;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -116,7 +117,7 @@
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
-        private ToolStripMenuItem forcerPingToolStripMenuItem;
         private Panel panel1;
+        private ToolStripMenuItem forcerPingToolStripMenuItem;
     }
 }

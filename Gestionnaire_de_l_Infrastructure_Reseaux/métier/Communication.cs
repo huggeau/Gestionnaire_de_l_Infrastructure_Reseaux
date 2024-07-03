@@ -10,6 +10,8 @@ using System.Collections;
 using System.Security.Policy;
 using Microsoft.VisualBasic.Devices;
 using System.Threading;
+using Google.Protobuf.Collections;
+using System.ComponentModel;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 {
@@ -154,6 +156,37 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
                 }
             }
             return site;
+        }
+
+        public List<string> RemplirListIps(int idSite)
+        {
+            List<string> listIps = new List<string>();
+            using (MySqlConnector.MySqlConnection conn = new MySqlConnector.MySqlConnection(connexionBDD()))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = $"SELECT ip FROM Materiel_Reseau WHERE id_site = {idSite}";
+                    MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
+
+                    MySqlConnector.MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string ip = reader.GetString(0);
+
+                        listIps.Add(ip);
+
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+            return listIps;
         }
     }
 }

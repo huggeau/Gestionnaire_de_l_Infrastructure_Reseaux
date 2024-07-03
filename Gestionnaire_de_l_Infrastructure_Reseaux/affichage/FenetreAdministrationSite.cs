@@ -1,6 +1,7 @@
 ﻿using Gestionnaire_de_l_Infrastructure_Reseaux.métier;
 using Mysqlx.Resultset;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,19 +20,23 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         private int taille = 230;
         private Panel[]? panels;
         private TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
-        private List<Label> listLabel = new List<Label>();
+        private List<TextBox> listTextBox = new List<TextBox>();
         private List<string> listIps = new List<string>();
+
+
         public FenetreAdministrationSite(int id)
         {
             InitializeComponent();
             idSite = id;
+            listIps = comm.RemplirListIps(id);
 
 
             tableLayoutPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 AutoSize = true,
-                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
+                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
+                BackColor = Color.Cornsilk,
             };
 
             panel1.Controls.Add(tableLayoutPanel);
@@ -50,68 +55,24 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel();
             fenetreSupprimer.ShowDialog();
         }
-
-
-        
+        private void forcerPingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Ping();
+        }
 
         //méthode provoquan un refresh des pings tout les 10 secondes
         private void timer1_Tick(object sender, EventArgs e)
         {
-            using (MySqlConnector.MySqlConnection conn = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
-            {
-                try
-                {
-                    conn.Open();
-                    string query = $"SELECT ip FROM Materiel_Reseau WHERE id_site = {idSite}";
-                    MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
-
-                    MySqlConnector.MySqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read()) 
-                    {
-                        string ip = reader.GetString(0);
-
-                        listIps.Add(ip);
-
-                    }
-                    
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
-            }
             Ping();
         }
-
-        //méthode qui sert a forcer le refresh des pings 
-        private void forcerPingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FenetreAdministrationSite_FormClosing(object sender, FormClosingEventArgs e)
         {
-            using (MySqlConnector.MySqlConnection conn = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
-            {
-                try
-                {
-                    conn.Open();
-                    string query = $"SELECT ip FROM Materiel_Reseau WHERE id_site = {idSite}";
-                    MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
-
-                    MySqlConnector.MySqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        string ip = reader.GetString(0);
-
-                        listIps.Add(ip);
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
-            }
-            Ping();
+            UpdateInfoBDD();
         }
+
+
+
+
 
         private void LoadDataAndPopulateTable()
         {
@@ -120,12 +81,12 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 try
                 {
                     conn.Open();
-                    string query = $"SELECT mr.ip,  mr.nom, e.nom AS etage,  cm.nom AS categorie_de_materiel FROM  Materiel_Reseau mr " +
+                    string query = $"SELECT mr.ip,  mr.nom, e.nom AS etage,  cm.nom AS categorie_de_materiel, commentaire, emplacement FROM  Materiel_Reseau mr " +
                         $"INNER JOIN  etage e ON mr.id_etage = e.id " +
                         $"INNER JOIN   categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id" +
                         $" WHERE mr.id_site = {idSite};";
                     MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
-                    
+
 
                     MySqlConnector.MySqlDataAdapter adapter = new MySqlConnector.MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
@@ -163,35 +124,71 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             {
                 for (int col = 0; col < dataTable.Columns.Count; col++)
                 {
-                    Label cellLabel = new Label
+                    TextBox cellTextBox = new TextBox
                     {
                         Text = dataTable.Rows[row][col].ToString(),
                         Dock = DockStyle.Fill,
-                        TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                        Size = new System.Drawing.Size(10,50),
+                        TextAlign = HorizontalAlignment.Center,
+                        Size = new System.Drawing.Size(10, 50),
                         BorderStyle = BorderStyle.FixedSingle
                     };
-                    tableLayoutPanel.Controls.Add(cellLabel, col, row + 1);
+                    tableLayoutPanel.Controls.Add(cellTextBox, col, row + 1);
 
-                    listLabel.Add(cellLabel);
+                    listTextBox.Add(cellTextBox);
                 }
             }
         }
 
         private void Ping()
         {
-            for (int i = 0; i < listLabel.Count; i += 4)
+            int IndexLabel = 0;
+            for (int i = 0; i < listIps.Count; i++)
             {
-                string ip = listIps[i-4]; // Assurez-vous que listIPs a la même longueur que listLabel
 
-                if (comm.PingSpecifique(ip))
+                if (comm.PingSpecifique(listIps[i]))
                 {
-                    listLabel[i].BackColor = Color.Green;
+                    listTextBox[IndexLabel].BackColor = Color.Green;
                 }
                 else
                 {
-                    listLabel[i].BackColor = Color.Red;
+                    listTextBox[IndexLabel].BackColor = Color.Red;
                 }
+
+                IndexLabel += 6;
+            }
+        }
+        
+        private void UpdateInfoBDD()
+        {
+            using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+            {
+                connection.Open();
+                List<int> siteIds = comm.RemplirListSite();
+                // Insert new position
+                for (int i = 0; i < siteIds.Count; i++)
+                {
+                    int siteId = siteIds[i];
+                    string updateQuery = "UPDATE Materiel_Reseau SET ip = @ip, nom = @nom, commentaire = @commentaire, emplacement = @emplacement WHERE id = @id";
+
+                    using (var command = new MySqlConnector.MySqlCommand(updateQuery, connection))
+                    {
+                        try
+                        {
+                            command.Parameters.AddWithValue("@ip", listTextBox[i].Text);
+                            command.Parameters.AddWithValue("@nom", listTextBox[i+1].Text);
+                            command.Parameters.AddWithValue("@commentaire", listTextBox[i+4].Text);
+                            command.Parameters.AddWithValue("@emplacement", listTextBox[i + 5].Text);
+                            command.Parameters.AddWithValue("@id", idSite);
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Console.WriteLine("Error: " + ex.Message);
+                        }
+                    }
+                }
+
             }
         }
     }

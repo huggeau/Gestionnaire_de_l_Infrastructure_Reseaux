@@ -31,12 +31,12 @@ public partial class FenetrePrincipale : Form
 
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        FenetreAjoutMateriel fenetreAjout = new FenetreAjoutMateriel();
+        FenetreAjoutSite fenetreAjout = new FenetreAjoutSite();
         fenetreAjout.ShowDialog();
     }
     private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel();
+        FenetreSupprimerSite fenetreSupprimer = new FenetreSupprimerSite();
         fenetreSupprimer.ShowDialog();
     }
     private void rechercheToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,27 +245,28 @@ public partial class FenetrePrincipale : Form
             connection.Open();
             List<int> siteIds = comm.RemplirListSite();
             // Insert new position
-            for(int i=0; i < siteIds.Count; i++)
+            for (int i = 0; i < siteIds.Count; i++)
             {
                 int siteId = siteIds[i];
                 string updateQuery = "UPDATE Site SET XPosition = @x, YPosition = @y WHERE id = @id";
 
                 using (var command = new MySqlConnector.MySqlCommand(updateQuery, connection))
                 {
-                    try 
-                    { 
+                    try
+                    {
                         command.Parameters.AddWithValue("@x", buttons[i].Location.X);
                         command.Parameters.AddWithValue("@y", buttons[i].Location.Y);
                         command.Parameters.AddWithValue("@id", siteId);
                         command.ExecuteNonQuery();
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
 
                         Console.WriteLine("Error: " + ex.Message);
                     }
                 }
             }
-            
+
         }
     }
 }
