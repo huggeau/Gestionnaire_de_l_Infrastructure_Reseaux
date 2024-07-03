@@ -12,10 +12,10 @@ using System.Windows.Forms;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    public partial class FenetreAjout : Form
+    public partial class FenetreAjoutMateriel : Form
     {
         private Communication comm = new Communication();
-        public FenetreAjout()
+        public FenetreAjoutMateriel()
         {
             InitializeComponent();
             RemplirComboBoxSite();

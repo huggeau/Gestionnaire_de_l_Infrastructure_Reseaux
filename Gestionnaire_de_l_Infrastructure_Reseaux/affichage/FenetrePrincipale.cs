@@ -31,12 +31,12 @@ public partial class FenetrePrincipale : Form
 
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        FenetreAjout fenetreAjout = new FenetreAjout();
+        FenetreAjoutMateriel fenetreAjout = new FenetreAjoutMateriel();
         fenetreAjout.ShowDialog();
     }
     private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        FenetreSupprimer fenetreSupprimer = new FenetreSupprimer();
+        FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel();
         fenetreSupprimer.ShowDialog();
     }
     private void rechercheToolStripMenuItem_Click(object sender, EventArgs e)
@@ -171,7 +171,7 @@ public partial class FenetrePrincipale : Form
         }
     }
 
-    // méthode qui  quand on clique sur un site ouvre la fenetre d'administration du site
+    // méthode qui, quand on clique sur un site, ouvre la fenetre d'administration du site
     private void Button_Click(object? sender, EventArgs e)
     {
         Button bouton = (Button)sender;
@@ -180,26 +180,39 @@ public partial class FenetrePrincipale : Form
         fenetreMairiePrinicpale.ShowDialog();
     }
 
-    //les méthodes suivantes sont relié a un bouton et servent a activer/ desactiver
+    //les méthodes suivantes sont relié a un bouton et servent a activer/desactiver
     //les méthodes de déplacement et de clique des sites
     private void AttachMouseHandlers()
     {
-        for (int i = 0; i < buttons.Length; i++)
+        try
         {
-            buttons[i].MouseDown += Button_MouseDown;
-            buttons[i].MouseMove += Button_MouseMove;
-            buttons[i].MouseUp += Button_MouseUp;
-            buttons[i].Click -= Button_Click;
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].MouseDown += Button_MouseDown;
+                buttons[i].MouseMove += Button_MouseMove;
+                buttons[i].MouseUp += Button_MouseUp;
+                buttons[i].Click -= Button_Click;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
         }
     }
     private void DetachMouseHandlers()
     {
-        for (int i = 0; i < buttons.Length; i++)
+        try
         {
-            buttons[i].MouseDown -= Button_MouseDown;
-            buttons[i].MouseMove -= Button_MouseMove;
-            buttons[i].MouseUp -= Button_MouseUp;
-            buttons[i].Click += Button_Click;
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].MouseDown -= Button_MouseDown;
+                buttons[i].MouseMove -= Button_MouseMove;
+                buttons[i].MouseUp -= Button_MouseUp;
+                buttons[i].Click += Button_Click;
+            }
+        }catch (Exception ex) 
+        { 
+            Console.WriteLine(ex.Message); 
         }
     }
 
@@ -239,10 +252,17 @@ public partial class FenetrePrincipale : Form
 
                 using (var command = new MySqlConnector.MySqlCommand(updateQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@x", buttons[i].Location.X);
-                    command.Parameters.AddWithValue("@y", buttons[i].Location.Y);
-                    command.Parameters.AddWithValue("@id", siteId);
-                    command.ExecuteNonQuery();
+                    try 
+                    { 
+                        command.Parameters.AddWithValue("@x", buttons[i].Location.X);
+                        command.Parameters.AddWithValue("@y", buttons[i].Location.Y);
+                        command.Parameters.AddWithValue("@id", siteId);
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex) {
+
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
                 }
             }
             

@@ -33,9 +33,9 @@
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
-            panelPrinicpale = new Panel();
-            timer1 = new System.Windows.Forms.Timer(components);
             forcerPingToolStripMenuItem = new ToolStripMenuItem();
+            timer1 = new System.Windows.Forms.Timer(components);
+            panel1 = new Panel();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -45,7 +45,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { modificationToolStripMenuItem, forcerPingToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(858, 28);
+            menuStrip1.Size = new Size(1336, 28);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -59,30 +59,16 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(224, 26);
+            ajouterToolStripMenuItem.Size = new Size(159, 26);
             ajouterToolStripMenuItem.Text = "ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(224, 26);
+            supprimerToolStripMenuItem.Size = new Size(159, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
-            // 
-            // panelPrinicpale
-            // 
-            panelPrinicpale.Dock = DockStyle.Fill;
-            panelPrinicpale.Location = new Point(0, 28);
-            panelPrinicpale.Name = "panelPrinicpale";
-            panelPrinicpale.Size = new Size(858, 564);
-            panelPrinicpale.TabIndex = 1;
-            // 
-            // timer1
-            // 
-            timer1.Enabled = true;
-            timer1.Interval = 10000;
-            timer1.Tick += timer1_Tick;
             // 
             // forcerPingToolStripMenuItem
             // 
@@ -91,13 +77,28 @@
             forcerPingToolStripMenuItem.Text = "forcer ping";
             forcerPingToolStripMenuItem.Click += forcerPingToolStripMenuItem_Click;
             // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 10000;
+            timer1.Tick += timer1_Tick;
+            // 
+            // panel1
+            // 
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 28);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1336, 632);
+            panel1.TabIndex = 1;
+            // 
             // FenetreAdministrationSite
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(858, 592);
-            Controls.Add(panelPrinicpale);
+            ClientSize = new Size(1336, 660);
+            Controls.Add(panel1);
             Controls.Add(menuStrip1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "FenetreAdministrationSite";
@@ -114,8 +115,8 @@
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem supprimerToolStripMenuItem;
-        private Panel panelPrinicpale;
         private System.Windows.Forms.Timer timer1;
         private ToolStripMenuItem forcerPingToolStripMenuItem;
+        private Panel panel1;
     }
 }

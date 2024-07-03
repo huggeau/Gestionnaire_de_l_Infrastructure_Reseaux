@@ -8,14 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
+namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    public partial class FenetreRecherche : Form
+    public partial class FenetreSupprimerMateriel : Form
     {
-        public FenetreRecherche()
+        public FenetreSupprimerMateriel()
         {
             InitializeComponent();
-            
         }
     }
 }

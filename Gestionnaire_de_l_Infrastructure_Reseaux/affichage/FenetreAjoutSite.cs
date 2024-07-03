@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    public partial class FenetreRecherche : Form
+    public partial class FenetreAjoutSite : Form
     {
-        public FenetreRecherche()
+        public FenetreAjoutSite()
         {
             InitializeComponent();
-            
         }
     }
 }

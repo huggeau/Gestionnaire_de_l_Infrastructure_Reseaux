@@ -1,6 +1,6 @@
 ﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    partial class FenetreAjout
+    partial class FenetreAjoutMateriel
     {
         /// <summary>
         /// Required designer variable.

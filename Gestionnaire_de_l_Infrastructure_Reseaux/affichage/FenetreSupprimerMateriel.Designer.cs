@@ -1,6 +1,6 @@
 ﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
-    partial class FenetreSupprimer
+    partial class FenetreSupprimerMateriel
     {
         /// <summary>
         /// Required designer variable.

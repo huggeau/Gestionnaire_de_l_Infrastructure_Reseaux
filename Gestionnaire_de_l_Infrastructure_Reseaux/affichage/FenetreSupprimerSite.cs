@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Gestionnaire_de_l_Infrastructure_Reseaux
+namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    public partial class FenetreSupprimer : Form
+    public partial class FenetreSupprimerSite : Form
     {
-        public FenetreSupprimer()
+        public FenetreSupprimerSite()
         {
             InitializeComponent();
         }

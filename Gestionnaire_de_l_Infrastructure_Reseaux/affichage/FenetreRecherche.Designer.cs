@@ -28,18 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            tableLayoutPanel1 = new TableLayoutPanel();
             SuspendLayout();
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 299F));
+            tableLayoutPanel1.Location = new Point(2, 1);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 175F));
+            tableLayoutPanel1.Size = new Size(914, 556);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // FenetreRecherche
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(917, 558);
+            Controls.Add(tableLayoutPanel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FenetreRecherche";
             Text = "fenetre de recherche";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
