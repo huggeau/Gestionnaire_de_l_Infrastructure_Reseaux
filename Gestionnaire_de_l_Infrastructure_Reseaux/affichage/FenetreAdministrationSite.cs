@@ -56,7 +56,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             FenetreAjoutMateriel fenetreAjout = new FenetreAjoutMateriel();
             fenetreAjout.ShowDialog();
         }
-
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel();
@@ -72,6 +71,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         {
             Ping();
         }
+
+        //méthode permettant de sauvegarder les  donnés modifier dans la base de données
         private void FenetreAdministrationSite_FormClosing(object sender, FormClosingEventArgs e)
         {
             UpdateInfoBDD();
@@ -81,6 +82,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
 
 
+        // charge les donnée de la BDD et les transforms un un tableau 
         private void LoadDataAndPopulateTable()
         {
             using (MySqlConnector.MySqlConnection conn = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
@@ -88,10 +90,11 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 try
                 {
                     conn.Open();
-                    string query = $"SELECT mr.id, mr.ip,  mr.nom, e.nom AS etage,  cm.nom AS categorie_de_materiel, commentaire, emplacement FROM  Materiel_Reseau mr " +
+                    string query = $"SELECT mr.id, mr.ip,  mr.nom, e.nom AS etage,  cm.nom AS categorie_de_materiel, emplacement, commentaire FROM  Materiel_Reseau mr " +
                         $"INNER JOIN  etage e ON mr.id_etage = e.id " +
                         $"INNER JOIN   categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id" +
-                        $" WHERE mr.id_site = {idSite};";
+                        $" WHERE mr.id_site = {idSite} " +
+                        $"ORDER BY e.nom DESC, cm.nom DESC";
                     MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
 
 
@@ -107,7 +110,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 }
             }
         }
-
         private void PopulateTableLayoutPanel(DataTable dataTable)
         {
             tableLayoutPanel.ColumnCount = dataTable.Columns.Count;
@@ -177,6 +179,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
 
+        // sert a ping les différents éléments
         private void Ping()
         {
             int IndexLabel = 1;
@@ -196,6 +199,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
 
+        // sert a mettre a jour la BDD
         private void UpdateInfoBDD()
         {
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
@@ -226,24 +230,41 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                             command.Parameters.AddWithValue("@nom", listTextBox[indexTextBox + 2].Text);
                             command.Parameters.AddWithValue("@commentaire", listTextBox[indexTextBox + 3].Text);
                             command.Parameters.AddWithValue("@emplacement", listTextBox[indexTextBox + 4].Text);
+
                             try
                             {
-                                var selectedEtage = listComboBox[indexComboBox].SelectedItem as ComboBoxItem;
-                                var selectedCategorie = listComboBox[indexComboBox + 1].SelectedItem as ComboBoxItem;
-                                if (selectedEtage != null && selectedCategorie != null)
+                                int idEtage;
+                                if (listComboBox[indexComboBox].SelectedItem != null)
                                 {
-                                    command.Parameters.AddWithValue("@id_etage", selectedEtage.Id);
-                                    command.Parameters.AddWithValue("@id_categorie", selectedCategorie.Id);
+                                    var selectedEtage = listComboBox[indexComboBox].SelectedItem as ComboBoxItem;
+                                    idEtage = selectedEtage.Id;
                                 }
                                 else
                                 {
-                                    throw new Exception("Sélection invalide dans les ComboBox.");
+                                    // Rechercher l'ID correspondant au texte actuel dans le ComboBox
+                                    idEtage = GetEtageIdByName(listComboBox[indexComboBox].Text);
                                 }
+
+                                int idCategorie;
+                                if (listComboBox[indexComboBox + 1].SelectedItem != null)
+                                {
+                                    var selectedCategorie = listComboBox[indexComboBox + 1].SelectedItem as ComboBoxItem;
+                                    idCategorie = selectedCategorie.Id;
+                                }
+                                else
+                                {
+                                    // Rechercher l'ID correspondant au texte actuel dans le ComboBox
+                                    idCategorie = GetCategorieIdByName(listComboBox[indexComboBox + 1].Text);
+                                }
+
+                                command.Parameters.AddWithValue("@id_etage", idEtage);
+                                command.Parameters.AddWithValue("@id_categorie", idCategorie);
                             }
                             catch (Exception e)
                             {
                                 Console.WriteLine(e.ToString());
                             }
+
                             command.Parameters.AddWithValue("@id", id);
                             command.ExecuteNonQuery();
 
@@ -258,6 +279,52 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 }
             }
         }
+
+        //sert a a chercher les ids du text qui est dans la combobox de base si on ne choisi aucune option qui est dedans
+        private int GetEtageIdByName(string name)
+        {
+            using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+            {
+                connection.Open();
+                string query = "SELECT id FROM etage WHERE nom = @name";
+                using (var command = new MySqlConnector.MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@name", name);
+                    var result = command.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        throw new Exception("Etage not found.");
+                    }
+                }
+            }
+        }
+        private int GetCategorieIdByName(string name)
+        {
+            using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+            {
+                connection.Open();
+                string query = "SELECT id FROM categorie_de_materiel WHERE nom = @name";
+                using (var command = new MySqlConnector.MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@name", name);
+                    var result = command.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        throw new Exception("Categorie de materiel not found.");
+                    }
+                }
+            }
+        }
+
+        // sert a remplir des combobox
         public void RemplirComboBoxEtage(ComboBox comboBox)
         {
             string query = "SELECT id, nom FROM etage";
@@ -280,7 +347,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             comboBox.DisplayMember = "Name"; // Propriété à afficher
             comboBox.ValueMember = "Id"; // Valeur utilisée en interne
         }
-
         public void RemplirComboBoxCategorie(ComboBox comboBox)
         {
             string query = "SELECT id, nom FROM categorie_de_materiel";
