@@ -56,7 +56,7 @@ public partial class FenetrePrincipale : Form
     {
         Ping();
     }
-   
+
     //sauvegarde la position des sites juste avant la fermetrure de la fenetre
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -191,6 +191,7 @@ public partial class FenetrePrincipale : Form
                 buttons[i].MouseDown += Button_MouseDown;
                 buttons[i].MouseMove += Button_MouseMove;
                 buttons[i].MouseUp += Button_MouseUp;
+
                 buttons[i].Click -= Button_Click;
             }
         }
@@ -210,9 +211,10 @@ public partial class FenetrePrincipale : Form
                 buttons[i].MouseUp -= Button_MouseUp;
                 buttons[i].Click += Button_Click;
             }
-        }catch (Exception ex) 
-        { 
-            Console.WriteLine(ex.Message); 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
@@ -268,5 +270,11 @@ public partial class FenetrePrincipale : Form
             }
 
         }
+    }
+
+    private void ajouterUnEtageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        FenetreAjoutEtage fenetreAjoutEtage = new FenetreAjoutEtage();
+        fenetreAjoutEtage.ShowDialog();
     }
 }

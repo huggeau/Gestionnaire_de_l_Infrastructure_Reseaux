@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    public partial class FenetreAjoutSite : Form
+    public partial class FenetreAjoutEtage : Form
     {
         private Communication comm = new Communication();
-        public FenetreAjoutSite()
+        public FenetreAjoutEtage()
         {
             InitializeComponent();
         }
@@ -24,12 +24,12 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
                 connection.Open();
-                string insertQuery = $"INSERT INTO Site (id, nom, XPosition, YPosition) VALUES (NUll, '{textBox1.Text}', '0','0');";
+                string insertQuery = $"INSERT INTO etage (id, nom) VALUES (NUll, '{textBox1.Text}');";
                 using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
                 {
                     try
                     {
-                            command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {

@@ -1,6 +1,6 @@
-﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux
+﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    partial class FenetreSupprimerMateriel
+    partial class FenetreAjoutEtage
     {
         /// <summary>
         /// Required designer variable.
@@ -28,56 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            BoutonSupprimer = new Button();
-            comboBox1 = new ComboBox();
+            button1 = new Button();
+            textBox1 = new TextBox();
             label1 = new Label();
             SuspendLayout();
             // 
-            // BoutonSupprimer
+            // button1
             // 
-            BoutonSupprimer.Location = new Point(104, 66);
-            BoutonSupprimer.Name = "BoutonSupprimer";
-            BoutonSupprimer.Size = new Size(105, 29);
-            BoutonSupprimer.TabIndex = 0;
-            BoutonSupprimer.Text = "supprimer";
-            BoutonSupprimer.UseVisualStyleBackColor = true;
-            BoutonSupprimer.Click += BoutonSupprimer_Click;
+            button1.Location = new Point(101, 82);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 0;
+            button1.Text = "sauvegarder";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // comboBox1
+            // textBox1
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(63, 28);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(194, 28);
-            comboBox1.TabIndex = 1;
+            textBox1.Location = new Point(12, 42);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(285, 34);
+            textBox1.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(88, 5);
+            label1.Location = new Point(46, 9);
             label1.Name = "label1";
-            label1.Size = new Size(147, 20);
+            label1.Size = new Size(215, 20);
             label1.TabIndex = 2;
-            label1.Text = "matériel à supprimer";
+            label1.Text = "nom de l'étage ou du batîment";
             // 
-            // FenetreSupprimerMateriel
+            // FentreAjoutEtage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(333, 107);
+            ClientSize = new Size(309, 124);
             Controls.Add(label1);
-            Controls.Add(comboBox1);
-            Controls.Add(BoutonSupprimer);
-            Name = "FenetreSupprimerMateriel";
-            Text = "supprimer un élément";
+            Controls.Add(textBox1);
+            Controls.Add(button1);
+            Name = "FentreAjoutEtage";
+            Text = "FentreAjoutEtage";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Button BoutonSupprimer;
-        private ComboBox comboBox1;
+        private Button button1;
+        private TextBox textBox1;
         private Label label1;
     }
 }

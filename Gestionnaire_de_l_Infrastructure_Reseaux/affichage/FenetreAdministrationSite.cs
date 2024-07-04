@@ -53,12 +53,12 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FenetreAjoutMateriel fenetreAjout = new FenetreAjoutMateriel();
+            FenetreAjoutMateriel fenetreAjout = new FenetreAjoutMateriel(idSite);
             fenetreAjout.ShowDialog();
         }
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel();
+            FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel(idSite);
             fenetreSupprimer.ShowDialog();
         }
         private void forcerPingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -189,10 +189,13 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 if (comm.PingSpecifique(listIps[i]))
                 {
                     listTextBox[IndexLabel].BackColor = Color.Green;
+                    listTextBox[IndexLabel].ForeColor = Color.White;
                 }
                 else
                 {
                     listTextBox[IndexLabel].BackColor = Color.Red;
+                    listTextBox[IndexLabel].ForeColor = Color.White;
+
                 }
 
                 IndexLabel += 5;
@@ -215,8 +218,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                                          "INNER JOIN categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id " +
                                          "SET mr.ip = @ip, " +
                                          "mr.nom = @nom, " +
-                                         "mr.commentaire = @commentaire, " +
                                          "mr.emplacement = @emplacement, " +
+                                         "mr.commentaire = @commentaire, " +
                                          "mr.id_etage = @id_etage, " +
                                          "mr.id_categorie_de_materiel = @id_categorie " +
                                          "WHERE mr.id = @id";
@@ -228,8 +231,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                             int id = Convert.ToInt32(listTextBox[indexTextBox].Text);
                             command.Parameters.AddWithValue("@ip", listTextBox[indexTextBox + 1].Text);
                             command.Parameters.AddWithValue("@nom", listTextBox[indexTextBox + 2].Text);
-                            command.Parameters.AddWithValue("@commentaire", listTextBox[indexTextBox + 3].Text);
-                            command.Parameters.AddWithValue("@emplacement", listTextBox[indexTextBox + 4].Text);
+                            command.Parameters.AddWithValue("@emplacement", listTextBox[indexTextBox + 3].Text);
+                            command.Parameters.AddWithValue("@commentaire", listTextBox[indexTextBox + 4].Text);
 
                             try
                             {

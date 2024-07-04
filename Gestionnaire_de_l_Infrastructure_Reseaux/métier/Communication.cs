@@ -166,7 +166,11 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
                 try
                 {
                     conn.Open();
-                    string query = $"SELECT ip FROM Materiel_Reseau WHERE id_site = {idSite}";
+                    string query = $"SELECT ip FROM Materiel_Reseau mr " +
+                        $"INNER JOIN categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id " +
+                        $"INNER JOIN etage e ON mr.id_etage = e.id " +
+                        $"WHERE id_site = {idSite} " +
+                        $"ORDER BY id_etage, id_categorie_de_materiel ";
                     MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
 
                     MySqlConnector.MySqlDataReader reader = cmd.ExecuteReader();

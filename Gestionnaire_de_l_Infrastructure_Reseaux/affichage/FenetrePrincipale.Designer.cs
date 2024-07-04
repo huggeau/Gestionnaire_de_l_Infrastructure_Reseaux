@@ -39,6 +39,7 @@
             loadLaBddToolStripMenuItem = new ToolStripMenuItem();
             timerFenetrePrinicipale = new System.Windows.Forms.Timer(components);
             panelPrinicpale = new Panel();
+            ajouterUnEtageToolStripMenuItem = new ToolStripMenuItem();
             menuStripFenetrePrincipale.SuspendLayout();
             SuspendLayout();
             // 
@@ -54,7 +55,7 @@
             // 
             // modificationToolStripMenuItem
             // 
-            modificationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ajouterToolStripMenuItem, supprimerToolStripMenuItem });
+            modificationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ajouterToolStripMenuItem, ajouterUnEtageToolStripMenuItem, supprimerToolStripMenuItem });
             modificationToolStripMenuItem.Name = "modificationToolStripMenuItem";
             modificationToolStripMenuItem.Size = new Size(108, 24);
             modificationToolStripMenuItem.Text = "modification";
@@ -62,14 +63,14 @@
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(159, 26);
-            ajouterToolStripMenuItem.Text = "ajouter";
+            ajouterToolStripMenuItem.Size = new Size(224, 26);
+            ajouterToolStripMenuItem.Text = "ajouter un site";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            supprimerToolStripMenuItem.Size = new Size(159, 26);
+            supprimerToolStripMenuItem.Size = new Size(224, 26);
             supprimerToolStripMenuItem.Text = "supprimer";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
@@ -109,28 +110,31 @@
             // 
             // panelPrinicpale
             // 
-            panelPrinicpale.AutoSize = true;
             panelPrinicpale.Dock = DockStyle.Fill;
             panelPrinicpale.Location = new Point(0, 28);
             panelPrinicpale.Name = "panelPrinicpale";
             panelPrinicpale.Size = new Size(1513, 701);
             panelPrinicpale.TabIndex = 1;
             // 
+            // ajouterUnEtageToolStripMenuItem
+            // 
+            ajouterUnEtageToolStripMenuItem.Name = "ajouterUnEtageToolStripMenuItem";
+            ajouterUnEtageToolStripMenuItem.Size = new Size(224, 26);
+            ajouterUnEtageToolStripMenuItem.Text = "ajouter un etage";
+            ajouterUnEtageToolStripMenuItem.Click += ajouterUnEtageToolStripMenuItem_Click;
+            // 
             // FenetrePrincipale
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             AutoScroll = true;
             BackColor = Color.Cornsilk;
             ClientSize = new Size(1513, 729);
             Controls.Add(panelPrinicpale);
             Controls.Add(menuStripFenetrePrincipale);
             ForeColor = SystemColors.Window;
-            FormBorderStyle = FormBorderStyle.Fixed3D;
             MainMenuStrip = menuStripFenetrePrincipale;
             Name = "FenetrePrincipale";
             Text = "Fenêtre principale";
-            WindowState = FormWindowState.Maximized;
             FormClosing += FenetrePrincipale_FormClosing;
             menuStripFenetrePrincipale.ResumeLayout(false);
             menuStripFenetrePrincipale.PerformLayout();
@@ -149,5 +153,6 @@
         private ToolStripMenuItem activerLeDeplacementDesPanelsToolStripMenuItem;
         private Panel panelPrinicpale;
         private ToolStripMenuItem loadLaBddToolStripMenuItem;
+        private ToolStripMenuItem ajouterUnEtageToolStripMenuItem;
     }
 }
