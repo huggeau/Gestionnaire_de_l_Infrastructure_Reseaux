@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             splitContainer1 = new SplitContainer();
+            button2 = new Button();
             label2 = new Label();
             label1 = new Label();
             textBox1 = new TextBox();
             comboBox1 = new ComboBox();
             button1 = new Button();
-            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.SuspendLayout();
@@ -58,6 +58,16 @@
             splitContainer1.Size = new Size(917, 558);
             splitContainer1.SplitterDistance = 40;
             splitContainer1.TabIndex = 2;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(742, 7);
+            button2.Name = "button2";
+            button2.Size = new Size(163, 29);
+            button2.TabIndex = 5;
+            button2.Text = "Recharger la page";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // label2
             // 
@@ -102,23 +112,12 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // button2
-            // 
-            button2.Location = new Point(742, 7);
-            button2.Name = "button2";
-            button2.Size = new Size(163, 29);
-            button2.TabIndex = 5;
-            button2.Text = "Recharger la page";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
             // FenetreRecherche
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(917, 558);
             Controls.Add(splitContainer1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FenetreRecherche";
             Text = "fenetre de recherche";
             splitContainer1.Panel1.ResumeLayout(false);

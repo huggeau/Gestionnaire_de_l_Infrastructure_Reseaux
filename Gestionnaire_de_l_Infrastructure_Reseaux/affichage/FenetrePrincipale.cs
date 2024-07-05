@@ -19,6 +19,7 @@ public partial class FenetrePrincipale : Form
     private Point startPoint = new Point(0, 0);
 
     private Button[]? buttons; // tableau qui va contenir tout les paneaux
+    private bool flagPosition = false;
 
 
 
@@ -72,10 +73,11 @@ public partial class FenetrePrincipale : Form
     //sauvegarde la position des sites juste avant la fermetrure de la fenetre
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
-        if (LoadButtonsFromDatabase())
+        if (flagPosition)
         {
             SaveButtonPositionsInDatabase();
         }
+        
         
     }
 
@@ -158,7 +160,7 @@ public partial class FenetrePrincipale : Form
 
             buttons = Lbouton.ToArray();
 
-            return true;
+            return flagPosition = true;
         }
     }
 
