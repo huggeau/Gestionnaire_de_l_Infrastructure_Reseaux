@@ -33,7 +33,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             idSite = id;
             listIps = comm.RemplirListIps(id);
 
-
+            //créer un tableaua evc des colonnes et des lignes afin de le remplir avec les données de la bdd
             tableLayoutPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -46,11 +46,13 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
             LoadDataAndPopulateTable();
 
+            //enlève la modification de l'id de chaque élément afin d'empêcher de modifier un élément non-modifiable de la bdd
             for (int i = 0; i < listTextBox.Count; i+=5) { 
                 listTextBox[i].Enabled = false;
             }
         }
 
+        // ouvre les fentres d'ajout et pour supprimer un matériel d'un site 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FenetreAjoutMateriel fenetreAjout = new FenetreAjoutMateriel(idSite);
@@ -61,6 +63,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             FenetreSupprimerMateriel fenetreSupprimer = new FenetreSupprimerMateriel(idSite);
             fenetreSupprimer.ShowDialog();
         }
+
+        // force le pings des éléments du site
         private void forcerPingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Ping();

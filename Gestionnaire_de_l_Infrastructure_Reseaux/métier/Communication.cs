@@ -158,6 +158,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
             return site;
         }
 
+        //sert à remplir la liste des ip depuis la bdd
         public List<string> RemplirListIps(int idSite)
         {
             List<string> listIps = new List<string>();

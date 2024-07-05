@@ -17,6 +17,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             InitializeComponent();
         }
 
+
+        //fenêtre servant a savoir si vous voule vraiment accepter la suppression de l'élément choisi
         private void button1_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;

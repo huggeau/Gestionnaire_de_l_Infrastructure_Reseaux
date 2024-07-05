@@ -34,7 +34,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             RemplirComboBox();
         }
 
-
+        // sert a afficher le résultat de notre recherche
         private void button1_Click(object sender, EventArgs e)
         {
             DataTable results = Recherche();
@@ -42,6 +42,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         }
 
 
+        // sert a afficher tout les materiel de la bdd
         private void LoadDataAndPopulateTable()
         {
             using (MySqlConnector.MySqlConnection conn = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
@@ -69,7 +70,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                 }
             }
         }
-
         private void PopulateTableLayoutPanel(DataTable dataTable)
         {
             tableLayoutPanel.ColumnCount = dataTable.Columns.Count;
@@ -131,6 +131,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             comboBox1.ValueMember = "Id"; // Valeur utilisée en interne
         }
 
+        //méthode qui va faire la recherche avec ce qu'on aura choisi dans le combobox et ce qu'on aura écrit dans le text box
         private DataTable Recherche()
         {
             using (var conn = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
@@ -166,6 +167,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             }
         }
 
+        // sert a donner le résultat de notre recherche
         private void DisplayResults(DataTable results)
         {
             // Clear previous results
@@ -211,6 +213,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             }
         }
 
+
+        // reload la page à la normale
         private void button2_Click(object sender, EventArgs e)
         {
             // Clear previous results

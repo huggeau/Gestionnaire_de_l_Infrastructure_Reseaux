@@ -8,6 +8,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
 {
     internal class ComboBoxItem
     {
+        // cette classe permet de mettre en mémoire les infos des éléments des combobox
+        // afin de pouvoir afficher le nom de l'élément mais de garder son id en mémoire
         public int Id { get; set; }
         public string Name { get; set; }
 

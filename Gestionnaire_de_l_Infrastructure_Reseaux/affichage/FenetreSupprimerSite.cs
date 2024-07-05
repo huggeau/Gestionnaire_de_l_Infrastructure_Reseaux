@@ -22,6 +22,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             RemplirComboBox();
         }
 
+        //rempli la combobx des choix
         private void RemplirComboBox()
         {
             string query = $"SELECT id, nom FROM Site";
@@ -44,6 +45,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             comboBox1.DisplayMember = "Name"; // Propriété à afficher
             comboBox1.ValueMember = "Id"; // Valeur utilisée en interne
         }
+
+        //supprime l'élément de la bdd
         private void SupprimerElement()
         {
             int id;
@@ -66,6 +69,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             }
         }
 
+        // ouvre la fenetre de confirmation du choix
         private void button1_Click(object sender, EventArgs e)
         {
             FenetreConfirmationcs fenetreConfirmationcs = new FenetreConfirmationcs();

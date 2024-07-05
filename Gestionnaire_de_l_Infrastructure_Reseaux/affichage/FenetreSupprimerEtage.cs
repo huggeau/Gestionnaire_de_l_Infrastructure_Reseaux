@@ -21,6 +21,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             RemplirComboBox();
         }
 
+        //sert a remplir tout les étages afin de pouvoir choisir lequel supprimer
         private void RemplirComboBox()
         {
             string query = $"SELECT id, nom FROM etage;";
@@ -44,6 +45,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             comboBox1.ValueMember = "Id"; // Valeur utilisée en interne
         }
 
+        //sert a ouvrir la fenetre de confirmation afin de savoir si c'est vraiment ce que vous voulez faire
         private void button1_Click(object sender, EventArgs e)
         {
             FenetreConfirmationcs fenetreConfirmationcs = new FenetreConfirmationcs();
@@ -62,6 +64,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             }
         }
 
+
+        //supprime l'élément de la bdd
         private void SupprimerElement()
         {
             int id;

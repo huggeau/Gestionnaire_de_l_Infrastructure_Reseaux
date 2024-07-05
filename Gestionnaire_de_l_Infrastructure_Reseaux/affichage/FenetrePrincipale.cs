@@ -29,6 +29,7 @@ public partial class FenetrePrincipale : Form
         InitializeComponent();
     }
 
+    //ouvre les différentes fenetres
     private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
     {
         FenetreAjoutSite fenetreAjout = new FenetreAjoutSite();
@@ -43,6 +44,17 @@ public partial class FenetrePrincipale : Form
     {
         FenetreRecherche fenetreRecherche = new FenetreRecherche();
         fenetreRecherche.ShowDialog();
+    }
+    private void ajouterUnEtageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        FenetreAjoutEtage fenetreAjoutEtage = new FenetreAjoutEtage();
+        fenetreAjoutEtage.ShowDialog();
+    }
+    private void supprimerUnÉtageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        FenetreSupprimerEtage supprimer = new FenetreSupprimerEtage();
+        supprimer.ShowDialog();
+
     }
 
     //sert à lancer les pings vers les infrastructure toute les 10 minutes
@@ -60,7 +72,11 @@ public partial class FenetrePrincipale : Form
     //sauvegarde la position des sites juste avant la fermetrure de la fenetre
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
-        SaveButtonPositionsInDatabase();
+        if (LoadButtonsFromDatabase())
+        {
+            SaveButtonPositionsInDatabase();
+        }
+        
     }
 
     //méthode permettant d'aciver ou non le déplacement des éléments d'affichage
@@ -90,25 +106,14 @@ public partial class FenetrePrincipale : Form
         }
         Ping();
     }
-    private void ajouterUnEtageToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        FenetreAjoutEtage fenetreAjoutEtage = new FenetreAjoutEtage();
-        fenetreAjoutEtage.ShowDialog();
-    }
-
-    private void supprimerUnÉtageToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        FenetreSupprimerEtage supprimer = new FenetreSupprimerEtage();
-        supprimer.ShowDialog();
-
-    }
+    
 
 
 
     // méthode créer par le développeur
 
     //methode permettant de créer x boutons ( x étant l jombre de site qu'il y aura dans la bdd )
-    private void LoadButtonsFromDatabase()
+    private bool LoadButtonsFromDatabase()
     {
 
         string query = "SELECT id, nom, XPosition, YPosition FROM Site ";
@@ -152,6 +157,8 @@ public partial class FenetrePrincipale : Form
             reader.Close();
 
             buttons = Lbouton.ToArray();
+
+            return true;
         }
     }
 

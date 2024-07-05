@@ -19,6 +19,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             InitializeComponent();
         }
 
+        //rajoute un étage dans la bdd
         private void button1_Click(object sender, EventArgs e)
         {
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))

@@ -71,6 +71,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             comboBoxCategorie.ValueMember = "Id"; // Valeur utilisée en interne
         }
 
+        // sert à enregistrer un nouveau materiel dans la bdd appartenant au site sur lequel on a ouvert la fenetre d'administration 
         private void BoutonSauvegarder_Click(object sender, EventArgs e)
         {
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))

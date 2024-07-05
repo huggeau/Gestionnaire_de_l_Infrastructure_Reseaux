@@ -25,7 +25,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             RemplirComboBox();
         }
 
-
+        // rempli la combobox des choix
         private void RemplirComboBox()
         {
             string query = $"SELECT id, nom FROM Materiel_Reseau WHERE id_site = {idSite}";
@@ -49,6 +49,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             comboBox1.ValueMember = "Id"; // Valeur utilisée en interne
         }
 
+        //ouvre la fenetre de confirmation 
         private void BoutonSupprimer_Click(object sender, EventArgs e)
         {
             FenetreConfirmationcs fenetreConfirmationcs = new FenetreConfirmationcs();
@@ -67,6 +68,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
 
+        //supprimer l'élément de la bdd
         private void SupprimerElement()
         {
             int id;
