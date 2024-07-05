@@ -44,9 +44,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             comboBox1.DisplayMember = "Name"; // Propriété à afficher
             comboBox1.ValueMember = "Id"; // Valeur utilisée en interne
         }
-
-
-
         private void SupprimerElement()
         {
             int id;
