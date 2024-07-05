@@ -37,10 +37,10 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.métier
         {
             //variable permettant la connexion à la base de données 
 
-            host = "192.168.10.145";
-            database = "db_Reseau_Mairie";
-            username = "administrateur";
-            password = "Admin07200&";
+            host = "//votre hôte";
+            database = "// votre nom de base de données";
+            username = "root";
+            password = "";
             connString = $"SERVER={host}; DATABASE={database}; UID={username}; PASSWORD={password}";
 
             return connString;
