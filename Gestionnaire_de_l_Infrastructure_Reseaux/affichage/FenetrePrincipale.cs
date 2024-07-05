@@ -73,6 +73,7 @@ public partial class FenetrePrincipale : Form
     //sauvegarde la position des sites juste avant la fermetrure de la fenetre
     private void FenetrePrincipale_FormClosing(object sender, FormClosingEventArgs e)
     {
+        //regarde si les boutons sont chargé si oui alors la fenetre sauvegarde leur position sinon elle ne fais rien
         if (flagPosition)
         {
             SaveButtonPositionsInDatabase();
@@ -81,7 +82,7 @@ public partial class FenetrePrincipale : Form
         
     }
 
-    //méthode permettant d'aciver ou non le déplacement des éléments d'affichage
+    //méthode permettant d'aciver ou non le déplacement des éléments d'affichage et change sa couleur celon s'il est activé/desactivé
     private void activerLeDeplacementDesPanelsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         isMoveModeEnabled = !isMoveModeEnabled;
@@ -102,11 +103,17 @@ public partial class FenetrePrincipale : Form
     private void loadLaBddToolStripMenuItem_Click(object sender, EventArgs e)
     {
         LoadButtonsFromDatabase();
+
+        //sert a donner la méthode de click a chaque boutton lors du load de la BDD
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].Click += Button_Click;
         }
+
+        //sert a faire un ping initiale
         Ping();
+
+        //désactive le bouton une fois cliquer 
         loadLaBddToolStripMenuItem.Enabled = false;
     }
     
@@ -115,10 +122,10 @@ public partial class FenetrePrincipale : Form
 
     // méthode créer par le développeur
 
-    //methode permettant de créer x boutons ( x étant l jombre de site qu'il y aura dans la bdd )
+    //methode permettant de créer x boutons ( x étant le nombre de site qu'il y aura dans la bdd )
     private bool LoadButtonsFromDatabase()
     {
-
+        // requete sql qui selectionne tout les site et leur position 
         string query = "SELECT id, nom, XPosition, YPosition FROM Site ";
 
         using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
@@ -129,6 +136,8 @@ public partial class FenetrePrincipale : Form
 
             List<Button> Lbouton = new List<Button>();
 
+            // vient lire chaque résultat retourner par la bdd et créer un bouton pour chaque site avec ces propriétées et les mets dans un tableau de bouton afin 
+            // de pouvoir continuer a les utiliser même après leur chargement.
             while (reader.Read())
             {
                 int id = reader.GetInt32(0);
@@ -153,14 +162,14 @@ public partial class FenetrePrincipale : Form
 
                 panelPrinicpale.Controls.Add(bouton);
 
-                // Debugging output
-                Console.WriteLine($"Panel created: {bouton.Name} at {bouton.Location}");
+                
             }
 
             reader.Close();
 
             buttons = Lbouton.ToArray();
 
+            //retourne un booléen qui va me premettre de savoir si les boutons on été chargés
             return flagPosition = true;
         }
     }
@@ -168,6 +177,7 @@ public partial class FenetrePrincipale : Form
     //les méthodes suivantes vont servir à pouvoir bouger nos sites afin de les déplacer ou l'on veut sur la fenetre
     private void Button_MouseDown(object? sender, MouseEventArgs e)
     {
+        //regarde si le booléen isMoveModeEnabled vraie et s'il l'es talors il autorise le déplacement des boutons 
         if (isMoveModeEnabled)
         {
             isDragging = true;
@@ -196,6 +206,8 @@ public partial class FenetrePrincipale : Form
     // méthode qui, quand on clique sur un site, ouvre la fenetre d'administration du site
     private void Button_Click(object? sender, EventArgs e)
     {
+        //on récupère l'id du site que j'ai mit dans le tag des boutons afin de l'envoyer a la fenetre d'administration pour pouvoir montrer
+        //les bon éléments 
         Button bouton = (Button)sender;
         int id = (int)bouton.Tag;
         FenetreAdministrationSite fenetreMairiePrinicpale = new FenetreAdministrationSite(id);
@@ -206,6 +218,7 @@ public partial class FenetrePrincipale : Form
     //les méthodes de déplacement et de clique des sites
     private void AttachMouseHandlers()
     {
+        //si isMoveModEnable alors on active/desactive les méthodes des bouttons suivantes 
         try
         {
             for (int i = 0; i < buttons.Length; i++)
@@ -224,6 +237,7 @@ public partial class FenetrePrincipale : Form
     }
     private void DetachMouseHandlers()
     {
+        // si isMoveModeEnable faux alors on active/desactive les méthodes des boutons
         try
         {
             for (int i = 0; i < buttons.Length; i++)
@@ -267,17 +281,23 @@ public partial class FenetrePrincipale : Form
         using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
         {
             connection.Open();
+
+            //récupère la liste de tout les sites de la bdd
             List<int> siteIds = comm.RemplirListSite();
-            // Insert new position
+            
             for (int i = 0; i < siteIds.Count; i++)
             {
+                //rajoyte l'id de chaque site dans une variable
                 int siteId = siteIds[i];
+
+                //requete permettant de mettre a jour la position des boutons dans la bdd
                 string updateQuery = "UPDATE Site SET XPosition = @x, YPosition = @y WHERE id = @id";
 
                 using (var command = new MySqlConnector.MySqlCommand(updateQuery, connection))
                 {
                     try
                     {
+                        // rajoute les paramètres position x, position y, et l'id du site dans la requete sql
                         command.Parameters.AddWithValue("@x", buttons[i].Location.X);
                         command.Parameters.AddWithValue("@y", buttons[i].Location.Y);
                         command.Parameters.AddWithValue("@id", siteId);

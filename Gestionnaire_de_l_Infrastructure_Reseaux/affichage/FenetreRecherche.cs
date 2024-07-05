@@ -20,6 +20,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         {
             InitializeComponent();
 
+            // créer un tableau a colonne et le rajoute a la fenetre
             tableLayoutPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -28,6 +29,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                 BackColor = Color.Cornsilk,
             };
 
+            // j'ai prit un panneaux séparé a la verticale afin d'avoir en bas le résultat de la requete et en haut les éléments nécessaire a la recherche
             splitContainer1.Panel2.Controls.Add(tableLayoutPanel);
 
             LoadDataAndPopulateTable();
@@ -37,6 +39,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         // sert a afficher le résultat de notre recherche
         private void button1_Click(object sender, EventArgs e)
         {
+            // affiche le résultat de la requete de recherche
             DataTable results = Recherche();
             DisplayResults(results);
         }
@@ -50,6 +53,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                 try
                 {
                     conn.Open();
+                    //requete qui va permettre d'affichr tout les materiel de la table des materiels
                     string query = $"SELECT mr.id, mr.ip,  mr.nom, s.nom, e.nom AS etage,  cm.nom AS categorie_de_materiel, emplacement, commentaire FROM  Materiel_Reseau mr " +
                         $"INNER JOIN  etage e ON mr.id_etage = e.id " +
                         $"INNER JOIN   categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id " +
@@ -57,7 +61,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                         $"ORDER BY e.nom DESC, cm.nom DESC";
                     MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
 
-
+                    // créer une table de donnée avec tout les valeurs récupérer de la requete
                     MySqlConnector.MySqlDataAdapter adapter = new MySqlConnector.MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
@@ -72,10 +76,11 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         }
         private void PopulateTableLayoutPanel(DataTable dataTable)
         {
+            // créer un tableau a colonne 
             tableLayoutPanel.ColumnCount = dataTable.Columns.Count;
             tableLayoutPanel.RowCount = dataTable.Rows.Count + 1;
 
-            // Add headers
+            // rajoute des titres aux colonnes
             for (int col = 0; col < dataTable.Columns.Count; col++)
             {
                 Label headerLabel = new Label
@@ -88,7 +93,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                 tableLayoutPanel.Controls.Add(headerLabel, col, 0);
             }
 
-            // Add data
+            // rajoute les données dans chauqe ligne pour chaque colonnes 
             for (int row = 0; row < dataTable.Rows.Count; row++)
             {
                 for (int col = 0; col < dataTable.Columns.Count; col++)
@@ -108,6 +113,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             }
         }
 
+        //sert a remplir le combobox des sites pour la recherche
         private void RemplirComboBox()
         {
             string query = $"SELECT id, nom FROM Site";
@@ -146,7 +152,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                                    "INNER JOIN etage e ON mr.id_etage = e.id " +
                                    "INNER JOIN categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id " +
                                    "INNER JOIN Site s ON mr.id_Site = s.id " +
-                                   "WHERE s.id = @idSite AND " + // Utilisation correcte de l'alias et nom de colonne 
+                                   "WHERE s.id = @idSite AND " + 
                                    "(mr.ip LIKE @searchTerm OR mr.nom LIKE @searchTerm)";
 
                 // Utilisation d'une connexion et de paramètres SQL

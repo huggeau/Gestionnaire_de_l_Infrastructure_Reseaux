@@ -94,6 +94,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 try
                 {
                     conn.Open();
+
+                    //requete récupérant les infos nécessaire a l'affichage du tableau avec les infos de la bdd récupérer
                     string query = $"SELECT mr.id, mr.ip,  mr.nom, e.nom AS etage,  cm.nom AS categorie_de_materiel, emplacement, commentaire FROM  Materiel_Reseau mr " +
                         $"INNER JOIN  etage e ON mr.id_etage = e.id " +
                         $"INNER JOIN   categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id" +
@@ -101,11 +103,13 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                         $"ORDER BY e.nom DESC, cm.nom DESC";
                     MySqlConnector.MySqlCommand cmd = new MySqlConnector.MySqlCommand(query, conn);
 
-
+                    //viens mettre les valeurs récupérer pour chaque colonne et chaque ligne dans une table de donnée que je donne a ma méthode afin de créer un
+                    //tableLayoutPnale, donc un tableau avec des lignes et des colonnes.
                     MySqlConnector.MySqlDataAdapter adapter = new MySqlConnector.MySqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
+                    //appelle la méthode de création du tableau a colonne
                     PopulateTableLayoutPanel(dt);
                 }
                 catch (Exception ex)
@@ -115,11 +119,13 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
         private void PopulateTableLayoutPanel(DataTable dataTable)
-        {
+        {   
+            // prend les valeurs de taille du tableau afin de savoir combien de colonne il lui faudra créer
             tableLayoutPanel.ColumnCount = dataTable.Columns.Count;
             tableLayoutPanel.RowCount = dataTable.Rows.Count + 1;
 
-            // Add headers
+
+            // rajoute les nom des colonnes 
             for (int col = 0; col < dataTable.Columns.Count; col++)
             {
                 Label headerLabel = new Label
@@ -132,11 +138,12 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 tableLayoutPanel.Controls.Add(headerLabel, col, 0);
             }
 
-            // Add data
+            // rajoute les données dans chanque colonnes et pour chaque ligne si besoins
             for (int row = 0; row < dataTable.Rows.Count; row++)
             {
                 for (int col = 0; col < dataTable.Columns.Count; col++)
                 {
+                    //dans les colonnes 3 et 4 je mets des combobox car ce sont les id des etages et des categorie donc pas un choix ou l'on peut écrire
                     if (col == 3) 
                     {
                         ComboBox comboBox = new ComboBox
@@ -164,6 +171,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
                         tableLayoutPanel.Controls.Add(comboBox);
                     }
+                    // le reste des colonnes je créer des textbox afin de pouvoir modifier leur données
                     else 
                     { 
                         TextBox cellTextBox = new TextBox
@@ -186,7 +194,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         // sert a ping les différents éléments
         private void Ping()
         {
+            //teste pour chaque colonne ou les ip se trouve si leur ping répond et si oui alorsles affiches en vert sinon en rouge
             int IndexLabel = 1;
+            // boucle qui va regarder pour chaque ligne 
             for (int i = 0; i < listIps.Count; i++)
             {
 
@@ -201,7 +211,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                     listTextBox[IndexLabel].ForeColor = Color.White;
 
                 }
-
+                // je rajoute toute les 5 colonnes car ce sont les nombres exacte de colonne qui se trouve entre chaque ip
                 IndexLabel += 5;
             }
         }
@@ -217,6 +227,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 // Insert new position
                 for (int i = 0; i < tableLayoutPanel.RowCount; i++)
                 {
+                    //requête sql qui me permet de mettre a jour tout les données de la table Materiel_reseau sauf l'id qui lui ne dois jamais changer
                     string updateQuery = "UPDATE Materiel_Reseau mr " +
                                          "INNER JOIN etage e ON mr.id_etage = e.id " +
                                          "INNER JOIN categorie_de_materiel cm ON mr.id_categorie_de_materiel = cm.id " +
@@ -232,6 +243,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                     {
                         try
                         {
+                            //prend les paramètres des textbox et les incrémente a la requete
                             int id = Convert.ToInt32(listTextBox[indexTextBox].Text);
                             command.Parameters.AddWithValue("@ip", listTextBox[indexTextBox + 1].Text);
                             command.Parameters.AddWithValue("@nom", listTextBox[indexTextBox + 2].Text);
@@ -240,6 +252,9 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
                             try
                             {
+                                //pour tout les conditions suivante, le code viens regarder si quelque chose a étaiot choisi dans les combobox, si oui alors il prend la 
+                                //valeur choisi et les mets dans les parametres de la requete, si non alors il prend ce qui est écrit de base dedans quand on ne fais pas de chois
+                                //et les mets en parametre de la requete
                                 int idEtage;
                                 if (listComboBox[indexComboBox].SelectedItem != null)
                                 {
@@ -290,6 +305,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         //sert a a chercher les ids du text qui est dans la combobox de base si on ne choisi aucune option qui est dedans
         private int GetEtageIdByName(string name)
         {
+            // viens chercher l'id qui a été donné dans la combobox
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
                 connection.Open();
@@ -311,6 +327,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         }
         private int GetCategorieIdByName(string name)
         {
+            //viens chercher l'id de la combobox
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
                 connection.Open();
@@ -331,7 +348,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
 
-        // sert a remplir des combobox
+        // sert a remplir des combobox et mettre leur valeur dans une classe d'objet afin d'avoir et leur nom et leur ip
         public void RemplirComboBoxEtage(ComboBox comboBox)
         {
             string query = "SELECT id, nom FROM etage";

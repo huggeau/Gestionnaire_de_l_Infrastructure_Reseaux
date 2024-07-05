@@ -77,12 +77,15 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
         {
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
+                //viens mettre en mémoire les éléments choisi des combobox
                 var selectedEtage = comboBoxEtage.SelectedItem as ComboBoxItem;
                 int idEtage = selectedEtage.Id;
 
                 var selectedCategorie = comboBoxCategorie.SelectedItem as ComboBoxItem;
                 int idCategorie = selectedCategorie.Id;
                 connection.Open();
+
+                //viens regarder si l'addresse ip est bien écrite et qu'il y a un nom au materiel
                 if (IpValid(textBoxIpMateriel.Text) && textBoxNomMateriel.Text != null)
                 {
                     string insertQuery = $"INSERT INTO Materiel_Reseau (id, ip, nom, id_site, id_etage, id_categorie_de_materiel, emplacement, commentaire " +
@@ -110,8 +113,10 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             }
         }
 
+        //sert a créer un regex pour l'ip
         private bool IpValid(string ip)
         {
+            // sert a créer un regex qui va permettre de tester si lip écrite est correctement écrite
             string regexIpv4 = @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 
             Regex ipValid = new Regex(regexIpv4);

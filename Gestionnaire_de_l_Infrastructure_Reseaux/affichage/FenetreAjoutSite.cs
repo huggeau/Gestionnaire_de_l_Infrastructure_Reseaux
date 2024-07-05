@@ -19,12 +19,13 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             InitializeComponent();
         }
 
-        // sert a rajoyté un site dans la bdd
+        // sert a rajouté un site dans la bdd
         private void button1_Click(object sender, EventArgs e)
         {
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
                 connection.Open();
+                //regarde si le txtbox n'est pas vide et si oui alors il insert une nouvelle donnée dans la bdd
                 if (textBox1.Text != null)
                 {
                     string insertQuery = $"INSERT INTO Site (id, nom, XPosition, YPosition) VALUES (NUll, '{textBox1.Text}', '0','0');";
