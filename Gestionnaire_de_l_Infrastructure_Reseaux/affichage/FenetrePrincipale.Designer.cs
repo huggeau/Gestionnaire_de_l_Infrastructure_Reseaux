@@ -32,6 +32,7 @@
             menuStripFenetrePrincipale = new MenuStrip();
             modificationToolStripMenuItem = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
+            ajouterUnEtageToolStripMenuItem = new ToolStripMenuItem();
             supprimerToolStripMenuItem = new ToolStripMenuItem();
             rechercheToolStripMenuItem = new ToolStripMenuItem();
             forcerUnPingToolStripMenuItem = new ToolStripMenuItem();
@@ -39,7 +40,7 @@
             loadLaBddToolStripMenuItem = new ToolStripMenuItem();
             timerFenetrePrinicipale = new System.Windows.Forms.Timer(components);
             panelPrinicpale = new Panel();
-            ajouterUnEtageToolStripMenuItem = new ToolStripMenuItem();
+            supprimerUnÉtageToolStripMenuItem = new ToolStripMenuItem();
             menuStripFenetrePrincipale.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,7 +56,7 @@
             // 
             // modificationToolStripMenuItem
             // 
-            modificationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ajouterToolStripMenuItem, ajouterUnEtageToolStripMenuItem, supprimerToolStripMenuItem });
+            modificationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ajouterToolStripMenuItem, ajouterUnEtageToolStripMenuItem, supprimerToolStripMenuItem, supprimerUnÉtageToolStripMenuItem });
             modificationToolStripMenuItem.Name = "modificationToolStripMenuItem";
             modificationToolStripMenuItem.Size = new Size(108, 24);
             modificationToolStripMenuItem.Text = "modification";
@@ -67,11 +68,18 @@
             ajouterToolStripMenuItem.Text = "ajouter un site";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
+            // ajouterUnEtageToolStripMenuItem
+            // 
+            ajouterUnEtageToolStripMenuItem.Name = "ajouterUnEtageToolStripMenuItem";
+            ajouterUnEtageToolStripMenuItem.Size = new Size(224, 26);
+            ajouterUnEtageToolStripMenuItem.Text = "ajouter un etage";
+            ajouterUnEtageToolStripMenuItem.Click += ajouterUnEtageToolStripMenuItem_Click;
+            // 
             // supprimerToolStripMenuItem
             // 
             supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
             supprimerToolStripMenuItem.Size = new Size(224, 26);
-            supprimerToolStripMenuItem.Text = "supprimer";
+            supprimerToolStripMenuItem.Text = "supprimer un site ";
             supprimerToolStripMenuItem.Click += supprimerToolStripMenuItem_Click;
             // 
             // rechercheToolStripMenuItem
@@ -116,12 +124,12 @@
             panelPrinicpale.Size = new Size(1513, 701);
             panelPrinicpale.TabIndex = 1;
             // 
-            // ajouterUnEtageToolStripMenuItem
+            // supprimerUnÉtageToolStripMenuItem
             // 
-            ajouterUnEtageToolStripMenuItem.Name = "ajouterUnEtageToolStripMenuItem";
-            ajouterUnEtageToolStripMenuItem.Size = new Size(224, 26);
-            ajouterUnEtageToolStripMenuItem.Text = "ajouter un etage";
-            ajouterUnEtageToolStripMenuItem.Click += ajouterUnEtageToolStripMenuItem_Click;
+            supprimerUnÉtageToolStripMenuItem.Name = "supprimerUnÉtageToolStripMenuItem";
+            supprimerUnÉtageToolStripMenuItem.Size = new Size(224, 26);
+            supprimerUnÉtageToolStripMenuItem.Text = "supprimer un étage";
+            supprimerUnÉtageToolStripMenuItem.Click += supprimerUnÉtageToolStripMenuItem_Click;
             // 
             // FenetrePrincipale
             // 
@@ -154,5 +162,6 @@
         private Panel panelPrinicpale;
         private ToolStripMenuItem loadLaBddToolStripMenuItem;
         private ToolStripMenuItem ajouterUnEtageToolStripMenuItem;
+        private ToolStripMenuItem supprimerUnÉtageToolStripMenuItem;
     }
 }

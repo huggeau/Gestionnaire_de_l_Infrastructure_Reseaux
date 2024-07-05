@@ -1,6 +1,6 @@
 ﻿namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    partial class FenetreAjoutEtage
+    partial class FenetreSupprimerEtage
     {
         /// <summary>
         /// Required designer variable.
@@ -28,56 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            textBox1 = new TextBox();
             label1 = new Label();
+            comboBox1 = new ComboBox();
+            button1 = new Button();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.Location = new Point(101, 82);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 0;
-            button1.Text = "sauvegarder";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(12, 42);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(285, 34);
-            textBox1.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(46, 9);
+            label1.Location = new Point(45, 9);
             label1.Name = "label1";
-            label1.Size = new Size(215, 20);
-            label1.TabIndex = 2;
-            label1.Text = "nom de l'étage ou du batîment";
+            label1.Size = new Size(287, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Choisir l'Etage ou le Batîment à supprimer";
             // 
-            // FenetreAjoutEtage
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(98, 32);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(151, 28);
+            comboBox1.TabIndex = 1;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(124, 75);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 2;
+            button1.Text = "supprimer";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // FenetreSupprimerEtage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(309, 124);
-            Controls.Add(label1);
-            Controls.Add(textBox1);
+            ClientSize = new Size(356, 126);
             Controls.Add(button1);
-            Name = "FenetreAjoutEtage";
-            Text = "Ajout d'un etage";
+            Controls.Add(comboBox1);
+            Controls.Add(label1);
+            Name = "FenetreSupprimerEtage";
+            Text = "Supprimer un étage";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Button button1;
-        private TextBox textBox1;
         private Label label1;
+        private ComboBox comboBox1;
+        private Button button1;
     }
 }

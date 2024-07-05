@@ -5,17 +5,16 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 {
-    public partial class FenetreSupprimerSite : Form
+    public partial class FenetreSupprimerEtage : Form
     {
         private Communication comm = new Communication();
-        public FenetreSupprimerSite()
+        public FenetreSupprimerEtage()
         {
             InitializeComponent();
 
@@ -24,7 +23,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 
         private void RemplirComboBox()
         {
-            string query = $"SELECT id, nom FROM Site";
+            string query = $"SELECT id, nom FROM etage;";
 
             using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
@@ -45,30 +44,6 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             comboBox1.ValueMember = "Id"; // Valeur utilisée en interne
         }
 
-
-
-        private void SupprimerElement()
-        {
-            int id;
-            var selectedId = comboBox1.SelectedItem as ComboBoxItem;
-            id = selectedId.Id;
-            string query = $"DELETE FROM Site WHERE id = {id}";
-
-            using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
-            {
-                MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(query, connection);
-                connection.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             FenetreConfirmationcs fenetreConfirmationcs = new FenetreConfirmationcs();
@@ -84,6 +59,28 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             {
                 MessageBox.Show("élément non-supprimer de la base de données");
                 this.Close();
+            }
+        }
+
+        private void SupprimerElement()
+        {
+            int id;
+            var selectedId = comboBox1.SelectedItem as ComboBoxItem;
+            id = selectedId.Id;
+            string query = $"DELETE FROM etage WHERE id = {id}";
+
+            using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+            {
+                MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(query, connection);
+                connection.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

@@ -56,11 +56,14 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
 
             if (result == DialogResult.OK)
             {
+                SupprimerElement();
                 MessageBox.Show("élément supprimer de la base de données ");
+                this.Close();
             }
             else
             {
                 MessageBox.Show("élément non-supprimer de la base de données");
+                this.Close();
             }
         }
 
@@ -75,16 +78,14 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
             {
                 MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(query, connection);
                 connection.Open();
-                MySqlConnector.MySqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                try
                 {
-                    int id = reader.GetInt32(0);
-                    string name = reader.GetString(1);
-
-                    comboBox1.Items.Add(new ComboBoxItem(id, name));
+                    command.ExecuteNonQuery();
                 }
-                reader.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

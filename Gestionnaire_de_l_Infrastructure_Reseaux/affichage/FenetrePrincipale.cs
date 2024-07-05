@@ -90,6 +90,18 @@ public partial class FenetrePrincipale : Form
         }
         Ping();
     }
+    private void ajouterUnEtageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        FenetreAjoutEtage fenetreAjoutEtage = new FenetreAjoutEtage();
+        fenetreAjoutEtage.ShowDialog();
+    }
+
+    private void supprimerUn…tageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        FenetreSupprimerEtage supprimer = new FenetreSupprimerEtage();
+        supprimer.ShowDialog();
+
+    }
 
 
 
@@ -272,9 +284,5 @@ public partial class FenetrePrincipale : Form
         }
     }
 
-    private void ajouterUnEtageToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        FenetreAjoutEtage fenetreAjoutEtage = new FenetreAjoutEtage();
-        fenetreAjoutEtage.ShowDialog();
-    }
+    
 }
