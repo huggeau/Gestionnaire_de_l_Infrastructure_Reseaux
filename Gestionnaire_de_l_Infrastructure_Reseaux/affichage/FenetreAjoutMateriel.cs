@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Text.RegularExpressions;
 
 namespace Gestionnaire_de_l_Infrastructure_Reseaux
 {
@@ -82,21 +83,40 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux
                 var selectedCategorie = comboBoxCategorie.SelectedItem as ComboBoxItem;
                 int idCategorie = selectedCategorie.Id;
                 connection.Open();
-                string insertQuery = $"INSERT INTO Materiel_Reseau (id, ip, nom, id_site, id_etage, id_categorie_de_materiel, emplacement, commentaire " +
-                    $") VALUES (NUll, '{textBoxIpMateriel.Text}', '{textBoxNomMateriel.Text}', '{idSite}', '{idEtage}', '{idCategorie}', '{textBoxEmplacement.Text}', '{textBoxCommentaire.Text}');";
-                using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
+                if (IpValid(textBoxIpMateriel.Text) && textBoxNomMateriel.Text != null)
                 {
-                    try
+                    string insertQuery = $"INSERT INTO Materiel_Reseau (id, ip, nom, id_site, id_etage, id_categorie_de_materiel, emplacement, commentaire " +
+                    $") VALUES (NUll, '{textBoxIpMateriel.Text}', '{textBoxNomMateriel.Text}', '{idSite}', '{idEtage}', '{idCategorie}', '{textBoxEmplacement.Text}', '{textBoxCommentaire.Text}');";
+                    using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
                     {
-                        command.ExecuteNonQuery();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
+
+                    this.Close();
                 }
+                else
+                {
+                    MessageBox.Show("l'addresse ip que vous avez rentré n'en ai pas une veuillez la réecrire\r\n " +
+                        "ou vous n'avez rien écrit en guise de nom ", "formulation incorrect");
+                }
+                
             }
-            this.Close();
+        }
+
+        private bool IpValid(string ip)
+        {
+            string regexIpv4 = @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+
+            Regex ipValid = new Regex(regexIpv4);
+
+            return ipValid.IsMatch(ip);
         }
     }
 }

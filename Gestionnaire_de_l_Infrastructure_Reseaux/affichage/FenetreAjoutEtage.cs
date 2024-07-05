@@ -25,20 +25,28 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
                 connection.Open();
-                string insertQuery = $"INSERT INTO etage (id, nom) VALUES (NUll, '{textBox1.Text}');";
-                using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
+                if (textBox1.Text != null)
                 {
-                    try
+                    string insertQuery = $"INSERT INTO etage (id, nom) VALUES (NUll, '{textBox1.Text}');";
+                    using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
                     {
-                        command.ExecuteNonQuery();
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("vous n'avez pas donner de nom a cette étage ou batiment", "erreur de saisie");
                 }
             }
-            this.Close();
+            
         }
     }
 }

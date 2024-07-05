@@ -107,6 +107,7 @@ public partial class FenetrePrincipale : Form
             buttons[i].Click += Button_Click;
         }
         Ping();
+        loadLaBddToolStripMenuItem.Enabled = false;
     }
     
 

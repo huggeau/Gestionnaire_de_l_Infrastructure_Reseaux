@@ -47,26 +47,36 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         }
 
         //supprime l'élément de la bdd
-        private void SupprimerElement()
+        private bool SupprimerElement()
         {
+            bool flag = false;
             int id;
             var selectedId = comboBox1.SelectedItem as ComboBoxItem;
-            id = selectedId.Id;
-            string query = $"DELETE FROM Site WHERE id = {id}";
-
-            using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
+            if (selectedId != null)
             {
-                MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(query, connection);
-                connection.Open();
-                try
+                id = selectedId.Id;
+                string query = $"DELETE FROM Site WHERE id = {id}";
+
+                using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
                 {
-                    command.ExecuteNonQuery();
+                    MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                flag = true;
             }
+            else
+            {
+                MessageBox.Show("vous n'avez rien choisi", "erreur de saisie");
+            }
+            return flag;
         }
 
         // ouvre la fenetre de confirmation du choix
@@ -77,9 +87,11 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
 
             if (result == DialogResult.OK)
             {
-                SupprimerElement();
-                MessageBox.Show("élément supprimer de la base de données ");
-                this.Close();
+                if (SupprimerElement())
+                {
+                    MessageBox.Show("élément supprimer de la base de données ");
+                    this.Close();
+                }
             }
             else
             {

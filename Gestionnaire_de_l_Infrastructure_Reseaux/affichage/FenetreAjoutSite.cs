@@ -25,20 +25,28 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             using (var connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
             {
                 connection.Open();
-                string insertQuery = $"INSERT INTO Site (id, nom, XPosition, YPosition) VALUES (NUll, '{textBox1.Text}', '0','0');";
-                using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
+                if (textBox1.Text != null)
                 {
-                    try
+                    string insertQuery = $"INSERT INTO Site (id, nom, XPosition, YPosition) VALUES (NUll, '{textBox1.Text}', '0','0');";
+                    using (var command = new MySqlConnector.MySqlCommand(insertQuery, connection))
                     {
+                        try
+                        {
                             command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("vous n'avez rien écrit", "erreur de saisie");
                 }
             }
-            this.Close();
+            
         }
     }
 }
