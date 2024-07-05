@@ -49,6 +49,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         //supprime l'élément de la bdd
         private bool SupprimerElement()
         {
+            //méthode qui permet de tester si un élément abin étét choisi et si oui va venri le supprimer de la bdd
             bool flag = false;
             int id;
             var selectedId = comboBox1.SelectedItem as ComboBoxItem;
@@ -82,6 +83,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         // ouvre la fenetre de confirmation du choix
         private void button1_Click(object sender, EventArgs e)
         {
+            //vient ouvrir la fenetre de confirmation et regarde la réponse renvoyer et supprimer celon la réponse.
+
             FenetreConfirmationcs fenetreConfirmationcs = new FenetreConfirmationcs();
             DialogResult result = fenetreConfirmationcs.ShowDialog();
 

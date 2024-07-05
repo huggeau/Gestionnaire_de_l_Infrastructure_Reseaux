@@ -147,6 +147,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                 var selectedSite = comboBox1.SelectedItem as ComboBoxItem;
                 int idSite = selectedSite.Id;
 
+                //requete sql qui permet de faire une recherche dans la table des Materiel_Reseau qui prend en compe l'id du site et qui va faire une recherche en 
+                //sur les catégorie nom ou ip
                 string sqlQuery = "SELECT mr.ip, mr.nom AS NomMateriel, s.nom AS NomSite, e.nom AS NomEtage, cm.nom AS NomCategorie, mr.commentaire " +
                                    "FROM Materiel_Reseau mr " +
                                    "INNER JOIN etage e ON mr.id_etage = e.id " +
@@ -155,7 +157,8 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                                    "WHERE s.id = @idSite AND " + 
                                    "(mr.ip LIKE @searchTerm OR mr.nom LIKE @searchTerm)";
 
-                // Utilisation d'une connexion et de paramètres SQL
+                // rempli une table de donnée avec les résultat de la requête
+                // et va ensuite recréer le tableau a colonne avec les données de la table de donnée 
                 using (MySqlConnector.MySqlConnection connection = new MySqlConnector.MySqlConnection(comm.connexionBDD()))
                 {
                     using (MySqlConnector.MySqlCommand command = new MySqlConnector.MySqlCommand(sqlQuery, connection))
@@ -176,7 +179,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         // sert a donner le résultat de notre recherche
         private void DisplayResults(DataTable results)
         {
-            // Clear previous results
+            // supprime toute les données du tableau afin de pouvoir écrire les nouvelles
             tableLayoutPanel.Controls.Clear();
             tableLayoutPanel.RowStyles.Clear();
             tableLayoutPanel.ColumnStyles.Clear();
@@ -186,7 +189,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
             tableLayoutPanel.ColumnCount = results.Columns.Count;
             tableLayoutPanel.RowCount = results.Rows.Count + 1;
 
-            // Add headers
+            // nom des colonnes
             for (int col = 0; col < results.Columns.Count; col++)
             {
                 Label headerLabel = new Label
@@ -199,7 +202,7 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
                 tableLayoutPanel.Controls.Add(headerLabel, col, 0);
             }
 
-            // Add data
+            //donnée remplie dans les colonnes
             for (int row = 0; row < results.Rows.Count; row++)
             {
                 for (int col = 0; col < results.Columns.Count; col++)
@@ -223,11 +226,12 @@ namespace Gestionnaire_de_l_Infrastructure_Reseaux.affichage
         // reload la page à la normale
         private void button2_Click(object sender, EventArgs e)
         {
-            // Clear previous results
+            // supprime tout les données du tableau 
             tableLayoutPanel.Controls.Clear();
             tableLayoutPanel.RowStyles.Clear();
             tableLayoutPanel.ColumnStyles.Clear();
 
+            //reremplie la page avec la requête d'affichage de base sans modificateur
             LoadDataAndPopulateTable();
         }
     }
